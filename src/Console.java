@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * This class is used to get user inputs
+ * This class is used to read users inputs
  */
 public class Console {
     private static Scanner scanner = new Scanner(System.in);
