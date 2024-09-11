@@ -4,8 +4,9 @@
  * specific implementations for validating various types of user input.
  */
 public interface ValidateInput {
-    String validateName(String name);
-    String validateEmail(String email);
-    String validatePassword(String password);
-    byte validateOption(byte userName);
+    boolean validateName(String name);
+    boolean validateEmail(String email);
+    boolean validatePassword(String password);
+
+    boolean validateOption(byte option, byte min, byte max);
 }
