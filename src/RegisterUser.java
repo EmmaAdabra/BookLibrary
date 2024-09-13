@@ -18,7 +18,14 @@ public class RegisterUser {
         setName();
         setEmail();
         setPassword();
-        chooseAccountType();
+
+//        check if user is registered
+        if(!isRegistered(email)) {
+            chooseAccountType();
+        } else {
+            System.out.println("User already exist, enter option .2 to login\n");
+            registrationUI();
+        }
     }
 
     private void chooseAccountType() {
@@ -34,8 +41,9 @@ public class RegisterUser {
     private void createAccount(byte accountType) {
         if (accountType == 2) {
             System.out.println("Admin user not available yet");
-            chooseAccountType();
+            registrationUI();
         }
+
         User user = new User(name, email, password);
         users.add(user);
         System.out.println("Account created successfully!!!\n");
@@ -57,6 +65,8 @@ public class RegisterUser {
     }
 
     private boolean isRegistered(String email){
+        if(users.size() == 0)
+            return false;
         for(User user : users) {
             if(email.equals(user.getUserEmail()))
                 return true;
