@@ -55,6 +55,15 @@ public class RegisterUser {
             case 0 -> System.exit(0);
         }
     }
+
+    private boolean isRegistered(String email){
+        for(User user : users) {
+            if(email.equals(user.getUserEmail()))
+                return true;
+        }
+        return false;
+    }
+
     private void setName() {
         this.name = IterateInput.stringInput("username", validate::validateName);
     }
