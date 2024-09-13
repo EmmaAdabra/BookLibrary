@@ -43,7 +43,6 @@ public class RegisterUser {
             System.out.println("Admin user not available yet");
             registrationUI();
         }
-
         User user = new User(name, email, password);
         users.add(user);
         System.out.println("Account created successfully!!!\n");
