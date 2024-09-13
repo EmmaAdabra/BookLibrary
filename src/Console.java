@@ -13,4 +13,8 @@ public class Console {
     public static byte readByte(){
         return scanner.nextByte();
     }
+
+    public static void clearBuffer() {
+        scanner.nextLine();
+    }
 }
