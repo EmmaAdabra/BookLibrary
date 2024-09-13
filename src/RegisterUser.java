@@ -40,7 +40,8 @@ public class RegisterUser {
 
     private void createAccount(byte accountType) {
         if (accountType == 2) {
-            System.out.println("Admin user not available yet");
+            Admin admin = new Admin(name, email, password);
+            System.out.println("Account created successfully!!!\n");
             registrationUI();
         }
         User user = new User(name, email, password);
