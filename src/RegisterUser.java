@@ -4,7 +4,6 @@ public class RegisterUser {
     private String name;
     private String email;
     private String password;
-    private User user;
     private ArrayList<User> users = new ArrayList<>();
     private ValidateInput validate;
 
@@ -37,7 +36,7 @@ public class RegisterUser {
             System.out.println("Admin user not available yet");
             chooseAccountType();
         }
-        user = new User(name, email, password);
+        User user = new User(name, email, password);
         users.add(user);
         System.out.println("Account created successfully!!!\n");
         registrationUI();
@@ -51,14 +50,9 @@ public class RegisterUser {
         System.out.println();
         option = IterateInput.byteInput("option", (byte)0, (byte)2, validate::validateOption);
         switch (option) {
-            case 1:
-                getUserDetails();
-                break;
-            case 2:
-                System.out.println("Login coming soon");
-                break;
-            case 0:
-                System.exit(0);
+            case 1 -> getUserDetails();
+            case 2 -> System.out.println("Login coming soon");
+            case 0 -> System.exit(0);
         }
     }
     private void setName() {
