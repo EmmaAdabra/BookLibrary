@@ -1,10 +1,12 @@
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class RegisterUser {
     private String name;
     private String email;
     private String password;
-    private ArrayList<User> users = new ArrayList<>();
+//    private List<User> users = new ArrayList<>();
     private ValidateInput validate;
 
     public RegisterUser(ValidateInput validate) {
@@ -41,11 +43,11 @@ public class RegisterUser {
     private void createAccount(byte accountType) {
         if (accountType == 2) {
             Admin admin = new Admin(name, email, password);
-            System.out.println("Account created successfully!!!\n");
-            registrationUI();
+            Library.users.add(admin);
+        } else {
+            User user = new User(name, email, password);
+            Library.users.add(user);
         }
-        User user = new User(name, email, password);
-        users.add(user);
         System.out.println("Account created successfully!!!\n");
         registrationUI();
     }
@@ -65,9 +67,9 @@ public class RegisterUser {
     }
 
     private boolean isRegistered(String email){
-        if(users.size() == 0)
+        if(Library.users.size() == 0)
             return false;
-        for(User user : users) {
+        for(User user : Library.users) {
             if(email.equals(user.getUserEmail()))
                 return true;
         }
