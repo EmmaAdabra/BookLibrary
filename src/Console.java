@@ -7,7 +7,7 @@ public class Console {
     private static Scanner scanner = new Scanner(System.in);
 
     public static String readString(){
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
     }
 
     public static byte readByte(){
