@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a user in the library system.
@@ -15,7 +16,8 @@ public class User {
     private String userEmail;
     private String userPassword;
     public boolean isOnline;
-    private ArrayList<Object> borrowedBook = new ArrayList<>();
+    private List<Library.TypeOfBorrowedBook> borrowedBooks;
+
 
     public User(String name, String email, String password) {
         this.userName = name;
@@ -30,14 +32,16 @@ public class User {
             System.out.println("1. To view all book");
             System.out.println("2. Search for book");
             System.out.println("3. Borrow book");
+            System.out.println("4. View borrowed books");
             System.out.println("0. Logout");
             System.out.println();
-            byte option = IterateInput.byteInput( "Option", (byte) 0, (byte)2, validate::validateOption);
+            byte option = IterateInput.byteInput( "Option", (byte) 0, (byte)4, validate::validateOption);
 
             switch (option) {
                 case 1 -> library.viewAllBook();
                 case 2 -> library.searchBook();
                 case 3 -> library.borrowBook(new Library.Borrower(getUserName(), getUserEmail()));
+                case 4 -> viewBorrowedBooks();
                 case 0 -> logout();
             }
         }
@@ -53,6 +57,19 @@ public class User {
     }
     public void logout() {
         isOnline = false;
+    }
+
+    public void viewBorrowedBooks(){
+        System.out.println();
+        System.out.println("--------------- You Borrowed Books ---------------");
+        System.out.println();
+        borrowedBooks = Library.getBookBorrowers(new Library.Borrower(getUserName(), getUserEmail()));
+        if(borrowedBooks != null) {
+            borrowedBooks.forEach(System.out::println);
+        }
+        else {
+            System.out.println("You have 0 borrowed book");
+        }
     }
 
     public String getUserName() {
