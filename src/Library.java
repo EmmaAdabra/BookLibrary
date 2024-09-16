@@ -1,14 +1,138 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class Library {
     public static List<Book> books = new ArrayList<>();
     public static List<User> users = new ArrayList<>();
-    private ValidateInput validate;
+    private ValidateInput validate = Main.validate;
+   private HashMap<Borrower, List<TypeOfBorrowedBook>> bookBorrowers = new HashMap<>();
 
-    public Library(ValidateInput validate) {
-        this.validate = validate;
+//   type of users who have borrowed a book
+   public static class Borrower {
+       private String name;
+       private String email;
+
+       public Borrower(String name, String email) {
+           this.name = name;
+           this.email = email;
+       }
+
+       @Override
+       public boolean equals(Object obj){
+           if(this == obj)
+               return true;
+           if(!(obj instanceof Borrower borrowers))
+               return false;
+           return email.equalsIgnoreCase(borrowers.email);
+       }
+
+       @Override
+       public int hashCode() {
+           return email.hashCode();
+       }
+
+       @Override
+       public String toString() {
+           return name + "(" + email + ")";
+       }
+   }
+
+//   borrowed book class
+   public static class TypeOfBorrowedBook{
+       private String title;
+       private String author;
+       private String ISBN;
+
+       public TypeOfBorrowedBook(String title, String author, String ISBN) {
+           this.title = title;
+           this.author = author;
+           this.ISBN = ISBN;
+       }
+       @Override
+       public String toString() {
+           return "Title: " + title + " Author: " + author + " ISBN: " + ISBN;
+       }
+
+       @Override
+       public boolean equals(Object o) {
+           if (this == o) return true;
+           if (!(o instanceof TypeOfBorrowedBook that)) return false;
+           return ISBN.equals(that.ISBN);
+       }
+
+       @Override
+       public int hashCode() {
+           return Objects.hash(ISBN);
+       }
+   }
+
+    public void borrowBook(Borrower user) {
+        String bookTitle;
+        TypeOfBorrowedBook aboutToBorrowBook;
+        Console.clearBuffer();
+        System.out.println();
+        System.out.print("Book title: ");
+        bookTitle = Console.readString();
+        System.out.println();
+        aboutToBorrowBook = canBorrow(user, bookTitle);
+        if(aboutToBorrowBook != null) {
+            List<TypeOfBorrowedBook> borrowedBooks;
+            if(bookBorrowers.containsKey(user)) {
+                borrowedBooks = bookBorrowers.get(user);
+                borrowedBooks.add(aboutToBorrowBook);
+            }
+            else {
+                borrowedBooks = new ArrayList<>();
+                borrowedBooks.add(aboutToBorrowBook);
+            }
+            bookBorrowers.put(user, borrowedBooks);
+            System.out.println("You have successfully borrowed " + bookTitle.toUpperCase());
+        }
+        else {
+            System.out.println("You can't borrow " + bookTitle);
+            System.out.println("Here are the reasons");
+            System.out.println("- No book found in the library");
+            System.out.println("- The book only have 1 copy in the library");
+            System.out.println("- You already borrowed more than 3 books");
+        }
     }
+
+    public void viewBorrowedBook(){
+        System.out.println();
+        System.out.println("--------------- Book Borrowers ---------------");
+        System.out.println();
+        for(Borrower user : bookBorrowers.keySet()){
+            System.out.println(user);
+            for (TypeOfBorrowedBook book :  bookBorrowers.get(user))
+                System.out.println(book);
+        }
+    }
+
+    private TypeOfBorrowedBook canBorrow(Borrower user, String bookTitle) {
+        if(bookBorrowers.containsKey(user) && bookBorrowers.get(user).size() > 3) {
+            return null;
+        }
+        if(!books.isEmpty()) {
+//            check if book exist
+            for(Book book : books) {
+                if(book.getTitle().equalsIgnoreCase(bookTitle)){
+                    if(book.getQuantity() > 1) {
+                        book.setAmountBorrowed((byte)(book.getAmountBorrowed() + 1));
+                        return new TypeOfBorrowedBook(book.getTitle(),
+                                book.getAuthor(), book.getISBN());
+
+                    }
+                }
+                else
+                    return null;
+            }
+        }
+        return null;
+    }
+
+
     public void addBook() {
         Console.clearBuffer();
         String title;
@@ -40,7 +164,7 @@ public class Library {
     }
 
     private boolean isBookExist(String ISBN) {
-        if(books.size() == 0)
+        if(books.isEmpty())
             return false;
         for (Book book : books) {
             if(book.getISBN().equalsIgnoreCase(ISBN)) {
@@ -50,13 +174,16 @@ public class Library {
         return false;
     }
 
+
     public void viewAllBook(){
+        System.out.println();
         System.out.println("--------------- All Books ---------------");
-        if(books.size() == 0)
+        System.out.println();
+        if(books.isEmpty())
             System.out.println("No book in the library, add book now");
         for(Book book : books) {
-            System.out.println();;
             System.out.println(book);
+            System.out.println();
         }
     }
 
@@ -69,7 +196,7 @@ public class Library {
     }
 
     private Book searchBookByTitle(String title) {
-        if(!(books.size() == 0)) {
+        if(!books.isEmpty()) {
             for(Book book : books) {
                 if(book.getTitle().equalsIgnoreCase(title))
                     return book;
@@ -79,7 +206,7 @@ public class Library {
     }
 
     private ArrayList<Book> searchBookByAuthor(String author) {
-        if(!(books.size() == 0)) {
+        if(!books.isEmpty()) {
             ArrayList<Book> searchResult = new ArrayList<>();
             for(Book book : books) {
                 if(book.getAuthor().equalsIgnoreCase(author))
@@ -92,7 +219,7 @@ public class Library {
     }
 
     private ArrayList<Book> searchBookByCategory(String category){
-        if(!(books.size() == 0)) {
+        if(!books.isEmpty()) {
             ArrayList<Book> searchResult = new ArrayList<>();
             for(Book book : books) {
                 if(book.getCategory().equalsIgnoreCase(category))
@@ -104,7 +231,7 @@ public class Library {
         return  null;
     }
 
-    private void searchBook(){
+    public void searchBook(){
 //        search interface
         byte option;
 
@@ -132,7 +259,7 @@ public class Library {
                 if(result == null)
                     System.out.println("Book not found");
                 else {
-                    System.out.println("Search result:");
+                    System.out.println("--------------- Search Result ---------------");
                     System.out.println(result);
                 }
             }
@@ -159,7 +286,7 @@ public class Library {
                 if(result == null)
                     System.out.println("Book not found");
                 else {
-                    System.out.println("Search result:");
+                    System.out.println("--------------- Search Result ---------------");
                     for (Book book : result) {
                         System.out.println(book);
                         System.out.println();
@@ -176,7 +303,7 @@ public class Library {
                 if(result == null)
                     System.out.println("Book not found");
                 else {
-                    System.out.println("Search result:");
+                    System.out.println("--------------- Search Result ---------------");
                     for (Book book : result) {
                         System.out.println(book);
                         System.out.println();
@@ -188,48 +315,37 @@ public class Library {
         }
     }
 
-    public void libraryUI(){
-        while (true) {
-            System.out.println();
-            System.out.println("--------------- Main Menu ---------------");
-            System.out.println();
-            System.out.println("1. Add book");
-            System.out.println("2. To view all book");
-            System.out.println("3. Search for book");
-            System.out.println("4. Remove book");
-            System.out.println("0. Quit");
-            System.out.println();
-            byte option = IterateInput.byteInput( "Option", (byte) 0, (byte)3, validate::validateOption);
-
-            switch (option) {
-                case 1 -> addBook();
-                case 2 -> viewAllBook();
-                case 3 -> searchBook();
-                case 4 -> removeBook();
-                case 0 -> System.exit(0);
-            }
-        }
-    }
-
-    private void removeBook(){
+    public void removeBook(){
+        boolean bookFound = false;
 //        UI
         String bookISBN;
         System.out.println();
         System.out.print("Enter book ISBN: ");
+        Console.clearBuffer();
         bookISBN = Console.readString();
 
-        if(books.size() > 0) {
+        if(!books.isEmpty()) {
             for(Book book : books) {
                 if(book.getISBN().equalsIgnoreCase(bookISBN)) {
                     if(book.getAmountBorrowed() == 0){
                         books.remove(book);
                         System.out.println(book.getTitle() + " removed from the library");
                     }
-                    else
+                    else {
                         System.out.println("Can't remove " + book.getTitle() + ", " +
                                 "have" + book.getAmountBorrowed() + "copies");
+                    }
+                    bookFound = true;
+                    break;
                 }
             }
+
+            if(!bookFound)
+                System.out.println("No book match this ISBN");
         }
+        else
+            System.out.println("No book found in library");
     }
+
+//    public
 }
