@@ -1,19 +1,11 @@
-import java.util.ArrayList;
-import java.util.List;
-
-
 public class RegisterUser {
     private String name;
     private String email;
     private String password;
 //    private List<User> users = new ArrayList<>();
-    private ValidateInput validate;
+    private ValidateInput validate = Main.validate;
 
-    public RegisterUser(ValidateInput validate) {
-        this.validate = validate;
-    }
-
-    private void getUserDetails() {
+    public void getUserDetails() {
         Console.clearBuffer();
         System.out.println();
         System.out.println("Enter your details");
@@ -25,8 +17,7 @@ public class RegisterUser {
         if(!isRegistered(email)) {
             chooseAccountType();
         } else {
-            System.out.println("User already exist, enter option .2 to login\n");
-            registrationUI();
+            System.out.println("User already exist, enter option .2 to login");
         }
     }
 
@@ -48,21 +39,24 @@ public class RegisterUser {
             User user = new User(name, email, password);
             Library.users.add(user);
         }
-        System.out.println("Account created successfully!!!\n");
-        registrationUI();
+        System.out.println("Account created successfully!!!");
     }
 
     public void registrationUI() {
         byte option;
-        System.out.println("1. Sign up");
-        System.out.println("2. Login");
-        System.out.println("0. Quit");
-        System.out.println();
-        option = IterateInput.byteInput("option", (byte)0, (byte)2, validate::validateOption);
-        switch (option) {
-            case 1 -> getUserDetails();
-            case 2 -> System.out.println("Login coming soon");
-            case 0 -> System.exit(0);
+        while (true) {
+            System.out.println();
+            System.out.println("---------------- Sign up / Login ---------------");
+            System.out.println("1. Sign up");
+            System.out.println("2. Login");
+            System.out.println("0. Quit");
+            System.out.println();
+            option = IterateInput.byteInput("option", (byte)0, (byte)2, validate::validateOption);
+            switch (option) {
+                case 1 -> getUserDetails();
+                case 2 -> LoginUser.getLoginDetails();
+                case 0 -> System.exit(0);
+            }
         }
     }
 
@@ -81,9 +75,11 @@ public class RegisterUser {
     }
 
     private void setEmail() {
-        this.email = IterateInput.stringInput("email", validate::validateEmail);
+        this.email = IterateInput.stringInput("email",
+                validate::validateEmail).toLowerCase();
     }
     private void setPassword() {
-        this.password = IterateInput.stringInput("password", validate::validatePassword);
+        this.password = IterateInput.stringInput("password",
+                validate::validatePassword);
     }
 }
