@@ -9,10 +9,12 @@ import java.util.ArrayList;
  * It provides methods for logging in and out.
  */
 public class User {
+    Library library = new Library();
+    ValidateInput validate = Main.validate;
     private String userName;
     private String userEmail;
     private String userPassword;
-    private boolean isOnline;
+    public boolean isOnline;
     private ArrayList<Object> borrowedBook = new ArrayList<>();
 
     public User(String name, String email, String password) {
@@ -21,8 +23,33 @@ public class User {
         this.userPassword = password;
     }
 
-    public void login(String email, String password) {
+    public void userUI(){
+        while (isOnline) {
+            System.out.println();
+            System.out.println("--------------- Main Menu ---------------");
+            System.out.println("1. To view all book");
+            System.out.println("2. Search for book");
+            System.out.println("3. Borrow book");
+            System.out.println("0. Logout");
+            System.out.println();
+            byte option = IterateInput.byteInput( "Option", (byte) 0, (byte)2, validate::validateOption);
+
+            switch (option) {
+                case 1 -> library.viewAllBook();
+                case 2 -> library.searchBook();
+                case 3 -> library.borrowBook(new Library.Borrower(getUserName(), getUserEmail()));
+                case 0 -> logout();
+            }
+        }
+    }
+
+    public void login() {
+        System.out.println();
+        System.out.println("-----------------------------------------");
+        System.out.println();
+        System.out.println("Welcome " + userName + "(" + userEmail + ")");
         isOnline = true;
+        userUI();
     }
     public void logout() {
         isOnline = false;
