@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Book {
     private String title;
@@ -6,7 +7,10 @@ public class Book {
     private byte bookID;
     private String category;
     private String ISBN;
+
     private byte amountBorrowed = 0;
+
+    private byte amountLeft = 0;
     private byte quantity;
     private LocalDate dateAdded;
 
@@ -27,7 +31,20 @@ public class Book {
     @Override
     public String toString() {
         return "Title: " + title + "\nAuthor: " + author + "\nBook ID: " + bookID +
-                "\nCategory: " + category + "\nQuantity: " + quantity + "\nDate Added: " + dateAdded;
+                "\nCategory: " + category + "\nQuantity: " + quantity
+                + "\nDate Added: " + dateAdded + "\nAmount Borrowed: " + getAmountBorrowed();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book book)) return false;
+        return getISBN().equals(book.getISBN());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getISBN());
     }
 
     private void setDateAdded(){
@@ -64,5 +81,17 @@ public class Book {
 
     public byte getAmountBorrowed() {
         return amountBorrowed;
+    }
+
+    public void setAmountBorrowed(byte amountBorrowed) {
+        this.amountBorrowed = amountBorrowed;
+    }
+
+    public byte getAmountLeft() {
+        return amountLeft;
+    }
+
+    public void setAmountLeft(byte amountLeft) {
+        this.amountLeft = amountLeft;
     }
 }
