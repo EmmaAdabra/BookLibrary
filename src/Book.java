@@ -84,7 +84,7 @@ public class Book {
     }
 
     public void setAmountBorrowed(byte amountBorrowed) {
-        this.amountBorrowed = amountBorrowed;
+        this.amountBorrowed += amountBorrowed;
     }
 
     public byte getAmountLeft() {
