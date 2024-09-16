@@ -7,14 +7,15 @@ public class Library {
     public static List<Book> books = new ArrayList<>();
     public static List<User> users = new ArrayList<>();
     private ValidateInput validate = Main.validate;
-   private HashMap<Borrower, List<TypeOfBorrowedBook>> bookBorrowers = new HashMap<>();
+   private static HashMap<Borrower, List<TypeOfBorrowedBook>> bookBorrowers = new HashMap<>();
 
 //   type of users who have borrowed a book
    public static class Borrower {
        private String name;
        private String email;
 
-       public Borrower(String name, String email) {
+
+    public Borrower(String name, String email) {
            this.name = name;
            this.email = email;
        }
@@ -25,7 +26,7 @@ public class Library {
                return true;
            if(!(obj instanceof Borrower borrowers))
                return false;
-           return email.equalsIgnoreCase(borrowers.email);
+           return email.equals(borrowers.email);
        }
 
        @Override
@@ -37,13 +38,17 @@ public class Library {
        public String toString() {
            return name + "(" + email + ")";
        }
-   }
+
+
+}
 
 //   borrowed book class
    public static class TypeOfBorrowedBook{
        private String title;
        private String author;
        private String ISBN;
+
+    private int amountBorrowed = 0;
 
        public TypeOfBorrowedBook(String title, String author, String ISBN) {
            this.title = title;
@@ -52,7 +57,8 @@ public class Library {
        }
        @Override
        public String toString() {
-           return "Title: " + title + " Author: " + author + " ISBN: " + ISBN;
+           return "Title: " + title + ", Author: " + author + ", ISBN: " + ISBN
+                   + ", Amount borrowed: " + getAmountBorrowed();
        }
 
        @Override
@@ -66,39 +72,87 @@ public class Library {
        public int hashCode() {
            return Objects.hash(ISBN);
        }
+
+    public int getAmountBorrowed() {
+        return amountBorrowed;
+    }
+
+    public void setAmountBorrowed() {
+        amountBorrowed++;
+    }
    }
 
     public void borrowBook(Borrower user) {
         String bookTitle;
-        TypeOfBorrowedBook aboutToBorrowBook;
+        Utilities.Response response;
         Console.clearBuffer();
         System.out.println();
         System.out.print("Book title: ");
         bookTitle = Console.readString();
         System.out.println();
-        aboutToBorrowBook = canBorrow(user, bookTitle);
-        if(aboutToBorrowBook != null) {
+
+//        check if user can borrow book
+        response = canBorrowBook(user, bookTitle);
+
+        if(response.code == 1) {
+            TypeOfBorrowedBook toBeBorrowedBook = (TypeOfBorrowedBook) response.obj;
+            toBeBorrowedBook.setAmountBorrowed();
             List<TypeOfBorrowedBook> borrowedBooks;
             if(bookBorrowers.containsKey(user)) {
                 borrowedBooks = bookBorrowers.get(user);
-                borrowedBooks.add(aboutToBorrowBook);
+                if(borrowedBooks.contains(toBeBorrowedBook)) {
+                    int indexOfToBeBorrowedBook = borrowedBooks.indexOf(toBeBorrowedBook);
+                    TypeOfBorrowedBook alreadyExistBook = borrowedBooks.get(indexOfToBeBorrowedBook);
+                    alreadyExistBook.setAmountBorrowed();
+                    borrowedBooks.set(indexOfToBeBorrowedBook, alreadyExistBook);
+                }
+                else
+                    borrowedBooks.add(toBeBorrowedBook);
             }
             else {
                 borrowedBooks = new ArrayList<>();
-                borrowedBooks.add(aboutToBorrowBook);
+                borrowedBooks.add(toBeBorrowedBook);
+                bookBorrowers.put(user, borrowedBooks);
             }
-            bookBorrowers.put(user, borrowedBooks);
-            System.out.println("You have successfully borrowed " + bookTitle.toUpperCase());
+            System.out.println(response.message);
         }
-        else {
-            System.out.println("You can't borrow " + bookTitle);
-            System.out.println("Here are the reasons");
-            System.out.println("- No book found in the library");
-            System.out.println("- The book only have 1 copy in the library");
-            System.out.println("- You already borrowed more than 3 books");
-        }
+        else
+            System.out.println(response.message);
     }
 
+    private Utilities.Response canBorrowBook(Borrower user, String bookTitle) {
+       if(!books.isEmpty()) {
+           TypeOfBorrowedBook book;
+//        see how to modify this logic later
+//        check if user have borrowed more than 3 books
+           if(bookBorrowers.containsKey(user)) {
+               List<TypeOfBorrowedBook> borrowedBooks = bookBorrowers.get(user);
+               int totalBookBorrowed = 0;
+               for(TypeOfBorrowedBook borrowedBook : borrowedBooks){
+                   totalBookBorrowed += borrowedBook.getAmountBorrowed();
+               }
+               if(totalBookBorrowed >= 3) {
+                   return new Utilities.Response(0, "you can't borrow more than 3 book", null);
+               }
+           }
+           for(Book bk : books) {
+               if(bk.getTitle().equalsIgnoreCase(bookTitle)) {
+                   if((bk.getQuantity() - bk.getAmountBorrowed() > 1)) {
+                       bk.setAmountBorrowed((byte) 1);
+                       book = new TypeOfBorrowedBook(bk.getTitle(), bk.getAuthor(), bk.getISBN());
+                       return new Utilities.Response(
+                               1, "You have successfully borrowed " + bookTitle, book);
+                   }
+                  return new Utilities.Response(
+                          0, "You can't borrow " + bookTitle + ", only 1 copy left", null);
+               }
+           }
+           return new Utilities.Response(0, bookTitle + " do not exist", null);
+       }
+
+       return new Utilities.Response(0, "No book added to library", null);
+
+    }
     public void viewBorrowedBook(){
         System.out.println();
         System.out.println("--------------- Book Borrowers ---------------");
@@ -107,30 +161,10 @@ public class Library {
             System.out.println(user);
             for (TypeOfBorrowedBook book :  bookBorrowers.get(user))
                 System.out.println(book);
+            System.out.println();
         }
     }
 
-    private TypeOfBorrowedBook canBorrow(Borrower user, String bookTitle) {
-        if(bookBorrowers.containsKey(user) && bookBorrowers.get(user).size() > 3) {
-            return null;
-        }
-        if(!books.isEmpty()) {
-//            check if book exist
-            for(Book book : books) {
-                if(book.getTitle().equalsIgnoreCase(bookTitle)){
-                    if(book.getQuantity() > 1) {
-                        book.setAmountBorrowed((byte)(book.getAmountBorrowed() + 1));
-                        return new TypeOfBorrowedBook(book.getTitle(),
-                                book.getAuthor(), book.getISBN());
-
-                    }
-                }
-                else
-                    return null;
-            }
-        }
-        return null;
-    }
 
 
     public void addBook() {
@@ -347,5 +381,9 @@ public class Library {
             System.out.println("No book found in library");
     }
 
-//    public
+    public static List<TypeOfBorrowedBook> getBookBorrowers(Borrower user) {
+       List<TypeOfBorrowedBook> borrowedBooks = bookBorrowers.get(user);
+       return  borrowedBooks;
+    }
+
 }
