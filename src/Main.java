@@ -4,6 +4,5 @@ public class Main {
         System.out.println("**** Virtual Library ****");
         var registerUser = new RegisterUser();
         registerUser.registrationUI();
-        Console.clearBuffer();
     }
 }

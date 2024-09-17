@@ -16,6 +16,7 @@ public class Console {
             value = scanner.nextLine().toUpperCase().trim();
             if(value.isEmpty()){
                 System.out.println(prompt + " can't be empty");
+//                scannerNext();
             }
             else {
                 break;
@@ -25,22 +26,23 @@ public class Console {
     }
 
     public static int readInt(String prompt){
-        String option;
+        int option;
         while (true) {
             try {
                 System.out.print(prompt +": ");
-                option = scanner.nextLine().trim();
-                if(option.isEmpty()){
+               String  userOption = scanner.nextLine().trim();
+                if(userOption.isEmpty()){
                     System.out.println(prompt + " can't be empty");
                     continue;
                 }
+                option = Integer.parseInt(userOption);
                 break;
-            } catch (InputMismatchException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("only accept numbers");
-                scannerNext();
+//                scannerNext();
             }
         }
-        return Integer.parseInt(option);
+        return option;
     }
 
     public static void clearBuffer() {

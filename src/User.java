@@ -50,7 +50,7 @@ public class User {
         System.out.println();
         System.out.println("-----------------------------------------");
         System.out.println();
-        System.out.println("Welcome " + userName + "(" + userEmail + ")");
+        System.out.println("Welcome " + userName + " (" + userEmail + ")");
         isOnline = true;
         userUI();
     }
