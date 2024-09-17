@@ -15,12 +15,12 @@ public class IterateInput {
         return value;
     }
 
-    static public byte byteInput(String prompt, byte min, byte max,
-                                 TriFunction<Byte, Byte, Byte, HashMap<String, String>> validate) {
-        byte option;
+    static public int intInput(String prompt, int min, int max,
+                               TriFunction<Integer, Integer, Integer, HashMap<String, String>> validate) {
+        int option;
         HashMap<String, String> response;
         while (true) {
-            option = Console.readByte(prompt);
+            option = Console.readInt(prompt);
             response = validate.apply(option, min, max);
             if(Boolean.parseBoolean(response.get("code")))
                 break;

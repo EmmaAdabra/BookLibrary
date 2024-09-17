@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +34,7 @@ public class User {
             System.out.println("4. View borrowed books");
             System.out.println("0. Logout");
             System.out.println();
-            byte option = IterateInput.byteInput( "Option", (byte) 0, (byte)4, validate::validateOption);
+            int option = IterateInput.intInput( "Option", 0, 4, validate::validateOption);
 
             switch (option) {
                 case 1 -> library.viewAllBook();

@@ -10,5 +10,5 @@ public interface ValidateInput {
     HashMap<String, String> validateEmail(String email);
     HashMap<String, String> validatePassword(String password);
 
-    HashMap<String, String> validateOption(byte option, byte min, byte max);
+    HashMap<String, String> validateOption(int option, int min, int max);
 }

@@ -4,17 +4,17 @@ import java.util.Objects;
 public class Book {
     private String title;
     private String author;
-    private byte bookID;
+    private int bookID;
     private String category;
     private String ISBN;
 
-    private byte amountBorrowed = 0;
+    private int amountBorrowed = 0;
 
-    private byte amountLeft = 0;
-    private byte quantity;
+    private int amountLeft = 0;
+    private int quantity;
     private LocalDate dateAdded;
 
-    public Book(String title, String author, String category, String ISBN, byte quantity) {
+    public Book(String title, String author, String category, String ISBN, int quantity) {
         this.title = title;
         this.author = author;
         this.category = category;
@@ -51,15 +51,15 @@ public class Book {
         this.dateAdded = LocalDate.now();
     }
 
-    public void setQuantity(byte quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
     private void setBookID() {
-        this.bookID = (byte) (Library.books.size() + 1);
+        this.bookID = (Library.books.size() + 1);
     }
 
-    public byte getQuantity(){
+    public int getQuantity(){
         return quantity;
     }
 
@@ -79,19 +79,19 @@ public class Book {
         return category;
     }
 
-    public byte getAmountBorrowed() {
+    public int getAmountBorrowed() {
         return amountBorrowed;
     }
 
-    public void setAmountBorrowed(byte amountBorrowed) {
+    public void setAmountBorrowed(int amountBorrowed) {
         this.amountBorrowed += amountBorrowed;
     }
 
-    public byte getAmountLeft() {
+    public int getAmountLeft() {
         return amountLeft;
     }
 
-    public void setAmountLeft(byte amountLeft) {
+    public void setAmountLeft(int amountLeft) {
         this.amountLeft = amountLeft;
     }
 }

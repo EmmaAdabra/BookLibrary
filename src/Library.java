@@ -137,7 +137,7 @@ public class Library {
            for(Book bk : books) {
                if(bk.getTitle().equalsIgnoreCase(bookTitle)) {
                    if((bk.getQuantity() - bk.getAmountBorrowed() > 1)) {
-                       bk.setAmountBorrowed((byte) 1);
+                       bk.setAmountBorrowed(1);
                        book = new TypeOfBorrowedBook(bk.getTitle(), bk.getAuthor(), bk.getISBN());
                        return new Utilities.Response(
                                1, "You have successfully borrowed " + bookTitle, book);
@@ -172,7 +172,7 @@ public class Library {
         String author ;
         String category;
         String ISBN;
-        byte quantity;
+        int quantity;
 
         System.out.println();
         System.out.println("--------------- Enter book details ---------------");
@@ -180,7 +180,7 @@ public class Library {
         author = Console.readString("Author");
         category = Console.readString("Category");
         ISBN = Console.readString("ISBN");
-        quantity = Console.readByte("Quantity");
+        quantity = Console.readInt("Quantity");
 
         if(isBookExist(ISBN)) {
             System.out.println(title + " already exist\n");
@@ -261,7 +261,7 @@ public class Library {
 
     public void searchBook(){
 //        search interface
-        byte option;
+        int option;
 
         System.out.println();
         System.out.println("Search by:");
@@ -272,7 +272,7 @@ public class Library {
         System.out.println("0. Main menu");
         System.out.println();
 
-        option = IterateInput.byteInput("Option", (byte)0, (byte)4, validate::validateOption);
+        option = IterateInput.intInput("Option", 0, 4, validate::validateOption);
         Console.clearBuffer();
 
         System.out.println();

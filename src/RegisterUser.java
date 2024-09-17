@@ -22,16 +22,16 @@ public class RegisterUser {
     }
 
     private void chooseAccountType() {
-        byte userOption;
+        int userOption;
         System.out.println();
         System.out.println("Choose account type:");
         System.out.println("1. User");
         System.out.println("2. Admin");
-        userOption = IterateInput.byteInput("Account type", (byte)1, (byte)2, validate::validateOption);
+        userOption = IterateInput.intInput("Account type", 1, 2, validate::validateOption);
         createAccount(userOption);
     }
 
-    private void createAccount(byte accountType) {
+    private void createAccount(int accountType) {
         if (accountType == 2) {
             Admin admin = new Admin(name, email, password);
             Library.users.add(admin);
@@ -43,7 +43,7 @@ public class RegisterUser {
     }
 
     public void registrationUI() {
-        byte option;
+        int option;
         while (true) {
             System.out.println();
             System.out.println("---------------- Sign up / Login ---------------");
@@ -51,7 +51,7 @@ public class RegisterUser {
             System.out.println("2. Login");
             System.out.println("0. Quit");
             System.out.println();
-            option = IterateInput.byteInput("option", (byte)0, (byte)2, validate::validateOption);
+            option = IterateInput.intInput("option", 0, 2, validate::validateOption);
             switch (option) {
                 case 1 -> getUserDetails();
                 case 2 -> LoginUser.getLoginDetails();

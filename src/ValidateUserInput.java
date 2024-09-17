@@ -51,7 +51,7 @@ public class ValidateUserInput implements ValidateInput{
     }
 
     @Override
-    public HashMap<String, String> validateOption(byte option, byte min, byte max) {
+    public HashMap<String, String> validateOption(int option, int min, int max) {
         HashMap<String, String> response = new HashMap<>();
         if(!(option >= min && option <= max)){
             response.put("code", "false");
