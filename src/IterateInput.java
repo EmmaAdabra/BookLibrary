@@ -6,8 +6,7 @@ public class IterateInput {
         String value;
         HashMap<String, String> response;
         while (true) {
-            System.out.print(prompt + ": ");
-            value = Console.readString();
+            value = Console.readString(prompt);
             response = validate.apply(value);
             if(Boolean.parseBoolean(response.get("code")))
                 break;
@@ -18,11 +17,10 @@ public class IterateInput {
 
     static public byte byteInput(String prompt, byte min, byte max,
                                  TriFunction<Byte, Byte, Byte, HashMap<String, String>> validate) {
-        Byte option;
+        byte option;
         HashMap<String, String> response;
         while (true) {
-            System.out.print(prompt + ": ");
-            option = Console.readByte();
+            option = Console.readByte(prompt);
             response = validate.apply(option, min, max);
             if(Boolean.parseBoolean(response.get("code")))
                 break;

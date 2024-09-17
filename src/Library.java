@@ -87,8 +87,7 @@ public class Library {
         Utilities.Response response;
         Console.clearBuffer();
         System.out.println();
-        System.out.print("Book title: ");
-        bookTitle = Console.readString();
+        bookTitle = Console.readString("Book title");
         System.out.println();
 
 //        check if user can borrow book
@@ -177,16 +176,11 @@ public class Library {
 
         System.out.println();
         System.out.println("--------------- Enter book details ---------------");
-        System.out.print("Title: ");
-        title = Console.readString();
-        System.out.print("Author: ");
-        author = Console.readString();
-        System.out.print("Category: ");
-        category = Console.readString();
-        System.out.print("ISBN: ");
-        ISBN = Console.readString();
-        System.out.print("Quantity: ");
-        quantity = Console.readByte();
+        title = Console.readString("Title");
+        author = Console.readString("Author");
+        category = Console.readString("Category");
+        ISBN = Console.readString("ISBN");
+        quantity = Console.readByte("Quantity");
 
         if(isBookExist(ISBN)) {
             System.out.println(title + " already exist\n");
@@ -285,8 +279,7 @@ public class Library {
         String query;
         switch (option) {
             case 1 -> {
-                System.out.print("Book Title: ");
-                query = Console.readString();
+                query = Console.readString("Book Title");
                 System.out.println();
                 Book result = searchBookByTitle(query);
 
@@ -299,8 +292,7 @@ public class Library {
             }
 
             case 2 -> {
-                System.out.print("Book ISBN: ");
-                query = Console.readString();
+                query = Console.readString("Book ISBN");
                 System.out.println();
                 Book result = searchBookByIBSN(query);
 
@@ -313,8 +305,7 @@ public class Library {
             }
 
             case 3 -> {
-                System.out.print("Book Author: ");
-                query = Console.readString();
+                query = Console.readString("Book Author");
                 List<Book> result = searchBookByAuthor(query);
 
                 if(result == null)
@@ -329,8 +320,7 @@ public class Library {
             }
 
             case 4 -> {
-                System.out.print("Book Category: ");
-                query = Console.readString();
+                query = Console.readString("Book Category");
                 System.out.println();
                 List<Book> result = searchBookByCategory(query);
 
@@ -354,9 +344,8 @@ public class Library {
 //        UI
         String bookISBN;
         System.out.println();
-        System.out.print("Enter book ISBN: ");
         Console.clearBuffer();
-        bookISBN = Console.readString();
+        bookISBN = Console.readString("Enter book ISBN");
 
         if(!books.isEmpty()) {
             for(Book book : books) {

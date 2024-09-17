@@ -11,9 +11,9 @@ public class ValidateUserInput implements ValidateInput{
     @Override
     public HashMap<String, String> validateName(String name) {
         HashMap<String, String> response = new HashMap<>();
-        if(!(name.length() >= 3)){
+        if(!(name.length() >= 3 && name.length() <= 20)){
             response.put("code", "false");
-            response.put("message", "username should be min 3 and max 20");
+            response.put("message", "username should be min 3 and max 20 character");
             return response;
         }
         response.put("code", "true");
