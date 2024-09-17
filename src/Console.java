@@ -24,19 +24,23 @@ public class Console {
         return value;
     }
 
-    public static byte readByte(String prompt){
-        byte option;
+    public static int readInt(String prompt){
+        String option;
         while (true) {
             try {
                 System.out.print(prompt +": ");
-                option = scanner.nextByte();
+                option = scanner.nextLine().trim();
+                if(option.isEmpty()){
+                    System.out.println(prompt + " can't be empty");
+                    continue;
+                }
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("only accept numbers");
                 scannerNext();
             }
         }
-        return option;
+        return Integer.parseInt(option);
     }
 
     public static void clearBuffer() {
