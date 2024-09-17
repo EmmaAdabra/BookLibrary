@@ -6,7 +6,6 @@ public class RegisterUser {
     private ValidateInput validate = Main.validate;
 
     public void getUserDetails() {
-        Console.clearBuffer();
         System.out.println();
         System.out.println("Enter your details");
         setName();

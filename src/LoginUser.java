@@ -7,7 +7,6 @@ public class LoginUser {
     public static void getLoginDetails(){
         System.out.println();
         System.out.println("--------------- Login Details ---------------");
-        Console.clearBuffer();
         String email = IterateInput.stringInput("email", validate::validateEmail);
         String password = IterateInput.stringInput("password", validate::validatePassword);
         if(!(users.size() == 0)) {

@@ -85,7 +85,6 @@ public class Library {
     public void borrowBook(Borrower user) {
         String bookTitle;
         Utilities.Response response;
-        Console.clearBuffer();
         System.out.println();
         bookTitle = Console.readString("Book title");
         System.out.println();
@@ -167,7 +166,6 @@ public class Library {
 
 
     public void addBook() {
-        Console.clearBuffer();
         String title;
         String author ;
         String category;
@@ -273,8 +271,6 @@ public class Library {
         System.out.println();
 
         option = IterateInput.intInput("Option", 0, 4, validate::validateOption);
-        Console.clearBuffer();
-
         System.out.println();
         String query;
         switch (option) {
@@ -344,7 +340,6 @@ public class Library {
 //        UI
         String bookISBN;
         System.out.println();
-        Console.clearBuffer();
         bookISBN = Console.readString("Enter book ISBN");
 
         if(!books.isEmpty()) {
