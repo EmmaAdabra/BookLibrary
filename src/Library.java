@@ -371,7 +371,18 @@ public class Library {
         return bookBorrowers.get(user);
     }
 
-//    private void viewAllRegisteredUsers(){
-//
-//    }
+    public void viewAllRegisteredUsers(){
+       if(!users.isEmpty()) {
+           System.out.println();
+           System.out.println("--------------- All Registered Users ---------------");
+           System.out.println();
+           users.forEach(user -> {
+               System.out.println(user);
+               System.out.println();
+           });
+       } else {
+           System.out.println("0 registered user");
+       }
+
+    }
 }
