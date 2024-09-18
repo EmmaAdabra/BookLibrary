@@ -1,5 +1,4 @@
 public class Admin extends User {
-    private String  privilege = "admin";
     public Admin(String name, String email, String password) {
         super(name, email, password);
     }
@@ -14,7 +13,7 @@ public class Admin extends User {
             System.out.println("3. Search for book");
             System.out.println("4. Remove book");
             System.out.println("5. Register User");
-            System.out.println("6. Borrow book");
+            System.out.println("6. View all registered users");
             System.out.println("7. View all book borrowers");
             System.out.println("0. Logout");
             System.out.println();
@@ -26,7 +25,7 @@ public class Admin extends User {
                 case 3 -> library.searchBook();
                 case 4 -> library.removeBook();
                 case 5 -> registerUser.getUserDetails();
-                case 6 -> library.borrowBook(new Library.Borrower(getUserName(), getUserEmail()));
+                case 6 -> library.viewAllRegisteredUsers();
                 case 7 -> library.viewBorrowedBook();
                 case 0 -> logout();
             }
@@ -36,6 +35,6 @@ public class Admin extends User {
 
     @Override
     public void setPrivilege() {
-        privilege = "ADMIN";
+        this.privilege = "ADMIN";
     }
 }

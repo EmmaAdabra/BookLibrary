@@ -15,13 +15,14 @@ public class User {
     private String userEmail;
     private String userPassword;
 
-    private String privilege;
+    public String privilege;
     public boolean isOnline;
 
     public User(String name, String email, String password) {
         this.userName = name;
         this.userEmail = email;
         this.userPassword = password;
+        setPrivilege();
     }
 
     public void userUI(){
