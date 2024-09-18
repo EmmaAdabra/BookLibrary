@@ -33,4 +33,9 @@ public class Admin extends User {
         }
 
     }
+
+    @Override
+    public void setPrivilege() {
+        privilege = "ADMIN";
+    }
 }
