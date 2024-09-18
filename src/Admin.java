@@ -1,4 +1,5 @@
 public class Admin extends User {
+    private String  privilege = "admin";
     public Admin(String name, String email, String password) {
         super(name, email, password);
     }
