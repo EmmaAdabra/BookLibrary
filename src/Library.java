@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Library {
     public static List<Book> books = new ArrayList<>();
     public static List<User> users = new ArrayList<>();
-    private ValidateInput validate = Main.validate;
+    private final ValidateInput VALIDATE = Main.validate;
    private static HashMap<Borrower, List<TypeOfBorrowedBook>> bookBorrowers = new HashMap<>();
 
 //   type of users who have borrowed a book
@@ -46,7 +46,7 @@ public class Library {
    public static class TypeOfBorrowedBook{
        private String title;
        private String author;
-       private String ISBN;
+       private final String ISBN;
 
     private int amountBorrowed = 0;
 
@@ -96,6 +96,7 @@ public class Library {
             TypeOfBorrowedBook toBeBorrowedBook = (TypeOfBorrowedBook) response.obj;
             toBeBorrowedBook.setAmountBorrowed();
             List<TypeOfBorrowedBook> borrowedBooks;
+
             if(bookBorrowers.containsKey(user)) {
                 borrowedBooks = bookBorrowers.get(user);
                 if(borrowedBooks.contains(toBeBorrowedBook)) {
@@ -129,13 +130,15 @@ public class Library {
                for(TypeOfBorrowedBook borrowedBook : borrowedBooks){
                    totalBookBorrowed += borrowedBook.getAmountBorrowed();
                }
-               if(totalBookBorrowed >= 3) {
+               if(totalBookBorrowed == 3) {
                    return new Utilities.Response(0, "you can't borrow more than 3 book", null);
                }
            }
+
            for(Book bk : books) {
-               if(bk.getTitle().equalsIgnoreCase(bookTitle)) {
+               if(bk.getTitle().equalsIgnoreCase(bookTitle)) { //check if book exist in library
                    if((bk.getQuantity() - bk.getAmountBorrowed() > 1)) {
+                       // check if amount of book available is greater than 1
                        bk.setAmountBorrowed(1);
                        book = new TypeOfBorrowedBook(bk.getTitle(), bk.getAuthor(), bk.getISBN());
                        return new Utilities.Response(
@@ -199,7 +202,6 @@ public class Library {
         }
         return false;
     }
-
 
     public void viewAllBook(){
         System.out.println();
@@ -270,7 +272,7 @@ public class Library {
         System.out.println("0. Main menu");
         System.out.println();
 
-        option = IterateInput.intInput("Option", 0, 4, validate::validateOption);
+        option = IterateInput.intInput("Option", 0, 4, VALIDATE::validateOption);
         System.out.println();
         String query;
         switch (option) {
@@ -308,10 +310,10 @@ public class Library {
                     System.out.println("Book not found");
                 else {
                     System.out.println("--------------- Search Result ---------------");
-                    for (Book book : result) {
+                    result.forEach(book -> {
                         System.out.println(book);
                         System.out.println();
-                    }
+                    });
                 }
             }
 
@@ -365,9 +367,11 @@ public class Library {
             System.out.println("No book found in library");
     }
 
-    public static List<TypeOfBorrowedBook> getBookBorrowers(Borrower user) {
-       List<TypeOfBorrowedBook> borrowedBooks = bookBorrowers.get(user);
-       return  borrowedBooks;
+    public static List<TypeOfBorrowedBook> getBooksBorrowedByUSer(Borrower user) {
+        return bookBorrowers.get(user);
     }
 
+//    private void viewAllRegisteredUsers(){
+//
+//    }
 }

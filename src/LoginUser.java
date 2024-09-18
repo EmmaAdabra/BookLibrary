@@ -1,14 +1,14 @@
 import java.util.List;
 
 public class LoginUser {
-    private static ValidateInput validate = Main.validate;
+    private static final ValidateInput VALIDATE = Main.validate;
     static List<User> users = Library.users;
 
     public static void getLoginDetails(){
         System.out.println();
         System.out.println("--------------- Login Details ---------------");
-        String email = IterateInput.stringInput("email", validate::validateEmail);
-        String password = IterateInput.stringInput("password", validate::validatePassword);
+        String email = IterateInput.stringInput("email", VALIDATE::validateEmail);
+        String password = IterateInput.stringInput("password", VALIDATE::validatePassword);
         if(!(users.size() == 0)) {
             User user = validateLoginDetails(email, password);
             if(!(user == null)) {

@@ -3,7 +3,25 @@ public class RegisterUser {
     private String email;
     private String password;
 //    private List<User> users = new ArrayList<>();
-    private ValidateInput validate = Main.validate;
+    private final ValidateInput VALIDATE = Main.validate;
+
+    public void registrationUI() {
+        int option;
+        while (true) {
+            System.out.println();
+            System.out.println("---------------- Sign up / Login ---------------");
+            System.out.println("1. Sign up");
+            System.out.println("2. Login");
+            System.out.println("0. Quit");
+            System.out.println();
+            option = IterateInput.intInput("option", 0, 2, VALIDATE::validateOption);
+            switch (option) {
+                case 1 -> getUserDetails();
+                case 2 -> LoginUser.getLoginDetails();
+                case 0 -> System.exit(0);
+            }
+        }
+    }
 
     public void getUserDetails() {
         System.out.println();
@@ -16,7 +34,7 @@ public class RegisterUser {
         if(!isRegistered(email)) {
             chooseAccountType();
         } else {
-            System.out.println("User already exist, enter option .2 to login");
+            System.out.println("User already exist, enter option 2 to login");
         }
     }
 
@@ -26,7 +44,7 @@ public class RegisterUser {
         System.out.println("Choose account type:");
         System.out.println("1. User");
         System.out.println("2. Admin");
-        userOption = IterateInput.intInput("Account type", 1, 2, validate::validateOption);
+        userOption = IterateInput.intInput("Account type", 1, 2, VALIDATE::validateOption);
         createAccount(userOption);
     }
 
@@ -41,24 +59,6 @@ public class RegisterUser {
         System.out.println("Account created successfully!!!");
     }
 
-    public void registrationUI() {
-        int option;
-        while (true) {
-            System.out.println();
-            System.out.println("---------------- Sign up / Login ---------------");
-            System.out.println("1. Sign up");
-            System.out.println("2. Login");
-            System.out.println("0. Quit");
-            System.out.println();
-            option = IterateInput.intInput("option", 0, 2, validate::validateOption);
-            switch (option) {
-                case 1 -> getUserDetails();
-                case 2 -> LoginUser.getLoginDetails();
-                case 0 -> System.exit(0);
-            }
-        }
-    }
-
     private boolean isRegistered(String email){
         if(Library.users.size() == 0)
             return false;
@@ -70,15 +70,15 @@ public class RegisterUser {
     }
 
     private void setName() {
-        this.name = IterateInput.stringInput("username", validate::validateName);
+        this.name = IterateInput.stringInput("username", VALIDATE::validateName);
     }
 
     private void setEmail() {
         this.email = IterateInput.stringInput("email",
-                validate::validateEmail).toLowerCase();
+                VALIDATE::validateEmail).toLowerCase();
     }
     private void setPassword() {
         this.password = IterateInput.stringInput("password",
-                validate::validatePassword);
+                VALIDATE::validatePassword);
     }
 }

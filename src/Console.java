@@ -1,22 +1,17 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * This class is used to read users inputs
  */
 public class Console {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
 
     public static String readString(String prompt){
         String value;
         while(true) {
             System.out.print(prompt +": ");
-            value = scanner.nextLine().toUpperCase().trim();
+            value = SCANNER.nextLine().toUpperCase().trim();
             if(value.isEmpty()){
                 System.out.println(prompt + " can't be empty");
-//                scannerNext();
             }
             else {
                 break;
@@ -30,7 +25,7 @@ public class Console {
         while (true) {
             try {
                 System.out.print(prompt +": ");
-               String  userOption = scanner.nextLine().trim();
+                String userOption = SCANNER.nextLine().trim();
                 if(userOption.isEmpty()){
                     System.out.println(prompt + " can't be empty");
                     continue;
@@ -39,16 +34,8 @@ public class Console {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("only accept numbers");
-//                scannerNext();
             }
         }
         return option;
-    }
-
-    public static void clearBuffer() {
-        scanner.nextLine();
-    }
-    public static void scannerNext(){
-        scanner.next();
     }
 }

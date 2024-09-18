@@ -15,8 +15,6 @@ public class User {
     private String userEmail;
     private String userPassword;
     public boolean isOnline;
-    private List<Library.TypeOfBorrowedBook> borrowedBooks;
-
 
     public User(String name, String email, String password) {
         this.userName = name;
@@ -59,10 +57,11 @@ public class User {
     }
 
     public void viewBorrowedBooks(){
+        List<Library.TypeOfBorrowedBook> borrowedBooks;
         System.out.println();
-        System.out.println("--------------- You Borrowed Books ---------------");
+        System.out.println("--------------- Your Borrowed Books ---------------");
         System.out.println();
-        borrowedBooks = Library.getBookBorrowers(new Library.Borrower(getUserName(), getUserEmail()));
+        borrowedBooks = Library.getBooksBorrowedByUSer(new Library.Borrower(getUserName(), getUserEmail()));
         if(borrowedBooks != null) {
             borrowedBooks.forEach(System.out::println);
         }
