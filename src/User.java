@@ -14,6 +14,8 @@ public class User {
     private String userName;
     private String userEmail;
     private String userPassword;
+
+    private String privilege;
     public boolean isOnline;
 
     public User(String name, String email, String password) {
@@ -70,6 +72,12 @@ public class User {
         }
     }
 
+    @Override
+    public String toString(){
+        return "Name: " + userName + "\n" + "Email: " + userEmail
+                + "\n" + "Privilege: " + privilege;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -80,5 +88,13 @@ public class User {
 
     public String getUserPassword() {
         return userPassword;
+    }
+
+    public String getPrivilege() {
+        return privilege;
+    }
+
+    public void setPrivilege() {
+        this.privilege = "USER";
     }
 }
