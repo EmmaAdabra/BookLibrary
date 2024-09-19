@@ -1,4 +1,6 @@
 package util;
+import response.Response;
+
 import java.util.HashMap;
 
 /**
@@ -7,8 +9,8 @@ import java.util.HashMap;
  * specific implementations for validating various types of user input.
  */
 public interface ValidateInput {
-    HashMap<String, String> validateName(String name);
-    HashMap<String, String> validateEmail(String email);
-    HashMap<String, String> validatePassword(String password);
-    HashMap<String, String> validateOption(int option, int min, int max);
+    Response validateName(String name);
+    Response validateEmail(String email);
+    Response validatePassword(String password);
+    Response validateOption(int option, int min, int max);
 }
