@@ -137,7 +137,7 @@ public class Library {
                    totalBookBorrowed += borrowedBook.getAmountBorrowed();
                }
                if(totalBookBorrowed == 3) {
-                   return new Response(0, "you can't borrow more than 3 book", null);
+                   return new Response(0, "you can't borrow more than 3 books", null);
                }
            }
 
@@ -199,7 +199,7 @@ public class Library {
         } else {
             Book book = new Book(title, author, category, ISBN, quantity);
             books.add(book);
-            System.out.println("Book added successfully\n");
+            System.out.println(title + " added successfully\n");
         }
     }
 
@@ -412,7 +412,7 @@ public class Library {
             System.out.println();
             userBorrowedBooks.forEach(System.out::println);
             System.out.println();
-            returnBookTile = Console.readString("Book Title");
+            returnBookTile = Console.readString("Book Title You Want To Return");
             for(TypeOfBorrowedBook book : userBorrowedBooks){
                 if(book.title.equals(returnBookTile)){
                     for (Book bk : books){
@@ -434,17 +434,21 @@ public class Library {
                     System.out.println("You have returned " + numberOfReturnCopies + " "
                             + copy + " of " + returnBookTile);
                     maninBook.setAmountBorrowed(-numberOfReturnCopies);
+                    if(toBeReturnedBook.getAmountBorrowed() <= 0){
+                        userBorrowedBooks.remove(toBeReturnedBook);
+                    }
                 } else {
                     userBorrowedBooks.remove(toBeReturnedBook);
                     maninBook.setAmountBorrowed(-1);
                     System.out.println("You have returned " + returnBookTile);
-                    if(userBorrowedBooks.isEmpty()) {
-                        bookBorrowers.remove(user);
-                    }
+                }
+
+                if(userBorrowedBooks.isEmpty()) {
+                    bookBorrowers.remove(user);
                 }
 
             } else {
-                System.out.println(returnBookTile + "not found among your borrowed book");
+                System.out.println(returnBookTile + " not found among your borrowed book");
             }
         } else {
             System.out.println("You have 0 borrowed book");
