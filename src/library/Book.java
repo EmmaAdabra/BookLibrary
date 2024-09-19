@@ -32,7 +32,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Title: " + title + "\nAuthor: " + author + "\nlibrary.Book ID: " + bookID +
+        return "Title: " + title + "\nAuthor: " + author + "\nISBN: " + ISBN +
                 "\nCategory: " + category + "\nQuantity: " + quantity
                 + "\nDate Added: " + dateAdded + "\nAmount Borrowed: " + getAmountBorrowed();
     }
