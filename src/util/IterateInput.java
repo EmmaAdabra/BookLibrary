@@ -1,32 +1,34 @@
 package util;
 
+import response.Response;
+
 import java.util.HashMap;
 import java.util.function.Function;
 
 public class IterateInput {
-    static public String stringInput(String prompt, Function<String, HashMap<String, String>> validate){
+    static public String stringInput(String prompt, Function<String, Response> validate){
         String value;
-        HashMap<String, String> response;
+        Response response;
         while (true) {
             value = Console.readString(prompt);
             response = validate.apply(value);
-            if(Boolean.parseBoolean(response.get("code")))
+            if(response.code == 1)
                 break;
-            System.out.println(response.get("message"));
+            System.out.println(response.message);
         }
         return value;
     }
 
     static public int intInput(String prompt, int min, int max,
-                               TriFunction<Integer, Integer, Integer, HashMap<String, String>> validate) {
+                               TriFunction<Integer, Integer, Integer, Response> validate) {
         int option;
-        HashMap<String, String> response;
+        Response response;
         while (true) {
             option = Console.readInt(prompt);
             response = validate.apply(option, min, max);
-            if(Boolean.parseBoolean(response.get("code")))
+            if(response.code == 1)
                 break;
-            System.out.println(response.get("message"));
+            System.out.println(response.message);
         }
 
         return option;

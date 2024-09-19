@@ -1,6 +1,7 @@
 package util;
 
-import java.util.HashMap;
+import response.Response;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,57 +12,38 @@ import java.util.regex.Pattern;
 public class ValidateUserInput implements ValidateInput {
 
     @Override
-    public HashMap<String, String> validateName(String name) {
-        HashMap<String, String> response = new HashMap<>();
+    public Response validateName(String name) {
         if(!(name.length() >= 3 && name.length() <= 20)){
-            response.put("code", "false");
-            response.put("message", "username should be min 3 and max 20 character");
-            return response;
+            return new Response(0, "username should be min 3 and max 20 character", null);
         }
-        response.put("code", "true");
-        response.put("message", "success");
-        return response;
+        return new Response(0, "success", null);
     }
 
     @Override
-    public HashMap<String, String> validateEmail(String email) {
-        HashMap<String, String> response = new HashMap<>();
+    public Response validateEmail(String email) {
         String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         var pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         if(!matcher.matches()) {
-            response.put("code", "false");
-            response.put("message", "Email should follow this format \"example@example.com\" ");
-            return response;
+            return new Response(0,
+                     "Email should follow this format \"example@example.com\" ", null);
         }
-        response.put("code", "true");
-        response.put("message", "success");
-        return response;
+        return new Response(0, "success", null);
     }
 
     @Override
-    public HashMap<String, String> validatePassword(String password) {
-        HashMap<String, String> response = new HashMap<>();
+    public Response validatePassword(String password) {
         if(!(password.length() >= 4)) {
-            response.put("code", "false");
-            response.put("message", "password shouldn't be less than 4");
-            return response;
+            return new Response(0, "password shouldn't be less than 4", null);
         }
-        response.put("code", "true");
-        response.put("message", "success");
-        return response;
+        return new Response(1, "success", null);
     }
 
     @Override
-    public HashMap<String, String> validateOption(int option, int min, int max) {
-        HashMap<String, String> response = new HashMap<>();
+    public Response validateOption(int option, int min, int max) {
         if(!(option >= min && option <= max)){
-            response.put("code", "false");
-            response.put("message", "option should be between " + min + " and " + max);
-            return response;
+            return new Response(0, "option should be between " + min + " and " + max, null);
         }
-        response.put("code", "true");
-        response.put("message", "success");
-        return response;
+        return new Response(1, "success", null);
     }
 }
