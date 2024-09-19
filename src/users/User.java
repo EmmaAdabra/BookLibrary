@@ -40,7 +40,7 @@ public class User {
             System.out.println("2. Search for book");
             System.out.println("3. Borrow book");
             System.out.println("4. View borrowed books");
-//            System.out.println("5. Return borrowed books");
+            System.out.println("5. Return borrowed books");
             System.out.println("0. Logout");
             System.out.println();
             int option = IterateInput.intInput( "Option", 0, 5, validate::validateOption);
@@ -50,7 +50,7 @@ public class User {
                 case 2 -> library.searchBook();
                 case 3 -> library.borrowBook(new Library.Borrower(getUserName(), getUserEmail()));
                 case 4 -> viewBorrowedBooks();
-//                case 5 -> library.returnBorrowedBook(new Library.Borrower(getUserName(), getUserEmail()));
+                case 5 -> library.returnBorrowedBook(new Library.Borrower(getUserName(), getUserEmail()));
                 case 0 -> logout();
             }
         }

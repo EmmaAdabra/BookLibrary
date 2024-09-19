@@ -395,4 +395,59 @@ public class Library {
            System.out.println("0 registered user");
        }
     }
+
+    public void returnBorrowedBook(Borrower user){
+        String returnBookTile;
+        int totalNumberOfBookBorrowed = 0;
+        int numberOfReturnCopies;
+        TypeOfBorrowedBook toBeReturnedBook = null;
+        boolean bookFoundFlag = false;
+        Book maninBook = null;
+
+        System.out.println();
+
+        if(bookBorrowers.containsKey(user)){
+            List<TypeOfBorrowedBook> userBorrowedBooks = bookBorrowers.get(user);
+            System.out.println("--------------- Your Borrowed Books ---------------");
+            System.out.println();
+            userBorrowedBooks.forEach(System.out::println);
+            System.out.println();
+            returnBookTile = Console.readString("Book Title");
+            for(TypeOfBorrowedBook book : userBorrowedBooks){
+                if(book.title.equals(returnBookTile)){
+                    for (Book bk : books){
+                        if(bk.getTitle().equals(returnBookTile))
+                            maninBook = bk;
+                    }
+                    toBeReturnedBook = book;
+                    bookFoundFlag = true;
+                    totalNumberOfBookBorrowed = book.getAmountBorrowed();
+                }
+            }
+
+            if(bookFoundFlag) {
+                if(totalNumberOfBookBorrowed  > 1) {
+                    numberOfReturnCopies =  IterateInput.intInput("How many copies do you wish to return",
+                            1, totalNumberOfBookBorrowed, VALIDATE::validateOption);
+                    toBeReturnedBook.setAmountBorrowed(-numberOfReturnCopies);
+                    String copy = (numberOfReturnCopies > 1) ? "copies" : "copy";
+                    System.out.println("You have returned " + numberOfReturnCopies + " "
+                            + copy + " of " + returnBookTile);
+                    maninBook.setAmountBorrowed(-numberOfReturnCopies);
+                } else {
+                    userBorrowedBooks.remove(toBeReturnedBook);
+                    maninBook.setAmountBorrowed(-1);
+                    System.out.println("You have returned " + returnBookTile);
+                    if(userBorrowedBooks.isEmpty()) {
+                        bookBorrowers.remove(user);
+                    }
+                }
+
+            } else {
+                System.out.println(returnBookTile + "not found among your borrowed book");
+            }
+        } else {
+            System.out.println("You have 0 borrowed book");
+        }
+    }
 }
