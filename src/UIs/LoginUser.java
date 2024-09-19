@@ -1,7 +1,15 @@
+package UIs;
+
+import library.Library;
+import users.User;
+import util.IterateInput;
+import util.Utils;
+import util.ValidateInput;
+
 import java.util.List;
 
 public class LoginUser {
-    private static final ValidateInput VALIDATE = Main.validate;
+    private static final ValidateInput VALIDATE = Utils.validate;
     static List<User> users = Library.users;
 
     public static void getLoginDetails(){

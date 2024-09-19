@@ -1,9 +1,19 @@
+package UIs;
+
+import UIs.LoginUser;
+import library.Library;
+import users.Librarian;
+import users.User;
+import util.IterateInput;
+import util.Utils;
+import util.ValidateInput;
+
 public class RegisterUser {
     private String name;
     private String email;
     private String password;
 //    private List<User> users = new ArrayList<>();
-    private final ValidateInput VALIDATE = Main.validate;
+    private final ValidateInput VALIDATE = Utils.validate;
 
     public void registrationUI() {
         int option;
@@ -50,7 +60,7 @@ public class RegisterUser {
 
     private void createAccount(int accountType) {
         if (accountType == 2) {
-            Admin admin = new Admin(name, email, password);
+            Librarian admin = new Librarian(name, email, password);
             Library.users.add(admin);
         } else {
             User user = new User(name, email, password);

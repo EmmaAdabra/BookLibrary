@@ -1,3 +1,10 @@
+package users;
+
+import library.Library;
+import util.IterateInput;
+import util.Utils;
+import util.ValidateInput;
+
 import java.util.List;
 
 /**
@@ -10,7 +17,7 @@ import java.util.List;
  */
 public class User {
     Library library = new Library();
-    ValidateInput validate = Main.validate;
+    ValidateInput validate = Utils.validate;
     private String userName;
     private String userEmail;
     private String userPassword;
@@ -33,15 +40,17 @@ public class User {
             System.out.println("2. Search for book");
             System.out.println("3. Borrow book");
             System.out.println("4. View borrowed books");
+//            System.out.println("5. Return borrowed books");
             System.out.println("0. Logout");
             System.out.println();
-            int option = IterateInput.intInput( "Option", 0, 4, validate::validateOption);
+            int option = IterateInput.intInput( "Option", 0, 5, validate::validateOption);
 
             switch (option) {
                 case 1 -> library.viewAllBook();
                 case 2 -> library.searchBook();
                 case 3 -> library.borrowBook(new Library.Borrower(getUserName(), getUserEmail()));
                 case 4 -> viewBorrowedBooks();
+//                case 5 -> library.returnBorrowedBook(new Library.Borrower(getUserName(), getUserEmail()));
                 case 0 -> logout();
             }
         }

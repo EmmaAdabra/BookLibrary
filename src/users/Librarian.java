@@ -1,7 +1,13 @@
-public class Admin extends User {
-    public Admin(String name, String email, String password) {
+package users;
+
+import util.IterateInput;
+import UIs.RegisterUser;
+
+public class Librarian extends User {
+    public Librarian(String name, String email, String password) {
         super(name, email, password);
     }
+
     RegisterUser registerUser = new RegisterUser();
     @Override
     public void userUI() {

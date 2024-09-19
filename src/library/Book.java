@@ -1,3 +1,5 @@
+package library;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -30,7 +32,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Title: " + title + "\nAuthor: " + author + "\nBook ID: " + bookID +
+        return "Title: " + title + "\nAuthor: " + author + "\nlibrary.Book ID: " + bookID +
                 "\nCategory: " + category + "\nQuantity: " + quantity
                 + "\nDate Added: " + dateAdded + "\nAmount Borrowed: " + getAmountBorrowed();
     }

@@ -1,3 +1,5 @@
+package util;
+
 import java.util.Scanner;
 /**
  * This class is used to read users inputs

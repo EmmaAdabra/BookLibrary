@@ -1,3 +1,4 @@
+package util;
 import java.util.HashMap;
 
 /**
@@ -9,6 +10,5 @@ public interface ValidateInput {
     HashMap<String, String> validateName(String name);
     HashMap<String, String> validateEmail(String email);
     HashMap<String, String> validatePassword(String password);
-
     HashMap<String, String> validateOption(int option, int min, int max);
 }
