@@ -3,6 +3,7 @@ package library;
 import users.User;
 import util.*;
 import response.Response;
+import validateInput.ValidateInput;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -160,6 +161,7 @@ public class Library {
        return new Response(0, "No book added to library", null);
 
     }
+
     public void viewBorrowedBook(){
         System.out.println();
         System.out.println("--------------- Book Borrowers ---------------");
@@ -176,8 +178,6 @@ public class Library {
         }
 
     }
-
-
 
     public void addBook() {
         String title;

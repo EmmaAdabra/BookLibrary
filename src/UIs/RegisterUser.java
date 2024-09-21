@@ -1,12 +1,11 @@
 package UIs;
 
-import UIs.LoginUser;
 import library.Library;
 import users.Librarian;
 import users.User;
 import util.IterateInput;
 import util.Utils;
-import util.ValidateInput;
+import validateInput.ValidateInput;
 
 public class RegisterUser {
     private String name;
