@@ -1,4 +1,4 @@
-package util;
+package validateInput;
 
 import response.Response;
 
@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * this class implements the util.ValidateInput interface to validate user input
+ * this class implements the validateInput.ValidateInput interface to validate user input
  *  for various criteria such as names, email addresses, passwords, and options.
  */
 public class ValidateUserInput implements ValidateInput {
@@ -16,7 +16,7 @@ public class ValidateUserInput implements ValidateInput {
         if(!(name.length() >= 3 && name.length() <= 20)){
             return new Response(0, "username should be min 3 and max 20 character", null);
         }
-        return new Response(0, "success", null);
+        return new Response(1, "success", null);
     }
 
     @Override
