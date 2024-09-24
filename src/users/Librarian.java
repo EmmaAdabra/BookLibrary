@@ -9,6 +9,7 @@ public class Librarian extends User {
     }
 
     RegisterUser registerUser = new RegisterUser();
+
     @Override
     public void userUI() {
         while (isOnline) {
@@ -23,7 +24,7 @@ public class Librarian extends User {
             System.out.println("7. View all book borrowers");
             System.out.println("0. Logout");
             System.out.println();
-            int option = IterateInput.intInput( "Option", (byte) 0, (byte)7, validate::validateOption);
+            int option = IterateInput.intInput("Option", (byte) 0, (byte) 7, validate::validateOption);
 
             switch (option) {
                 case 1 -> library.addBook();
