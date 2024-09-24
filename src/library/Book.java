@@ -49,7 +49,7 @@ public class Book {
         return Objects.hash(getISBN());
     }
 
-    private void setDateAdded(){
+    private void setDateAdded() {
         this.dateAdded = LocalDate.now();
     }
 
@@ -61,7 +61,7 @@ public class Book {
         this.bookID = (Library.books.size() + 1);
     }
 
-    public int getQuantity(){
+    public int getQuantity() {
         return quantity;
     }
 
