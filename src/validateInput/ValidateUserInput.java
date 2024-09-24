@@ -28,7 +28,7 @@ public class ValidateUserInput implements ValidateInput {
             return new Response(0,
                      "Email should follow this format \"example@example.com\" ", null);
         }
-        return new Response(0, "success", null);
+        return new Response(1, "success", null);
     }
 
     @Override

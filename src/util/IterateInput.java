@@ -25,7 +25,7 @@ public class IterateInput {
         while (true) {
             option = Console.readInt(prompt);
             response = validate.apply(option, min, max);
-            if (response.code == 0)
+            if (response.code == 1)
                 break;
             System.out.println(response.message);
         }
