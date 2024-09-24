@@ -26,7 +26,7 @@ public class LoginUser {
                 System.out.println("Invalid login detail");
         }
         else
-            System.out.println("No user is registered yet");
+            System.out.println("No registered user");
     }
 
     private static User validateLoginDetails(String email, String password){
