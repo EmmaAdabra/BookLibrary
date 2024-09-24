@@ -9,10 +9,8 @@ import java.util.List;
 
 /**
  * Represents a user in the library system.
- *
  * This class maintains information about the user's credentials, online status,
  * and a list of borrowed books.
- *
  * It provides methods for logging in and out.
  */
 public class User {
