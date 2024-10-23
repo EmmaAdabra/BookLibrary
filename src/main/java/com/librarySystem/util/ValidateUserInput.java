@@ -1,15 +1,13 @@
-package validateInput;
-
-import response.Response;
+package main.java.com.librarySystem.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * this class implements the validateInput.ValidateInput interface to validate user input
+ * this class implements the main.java.com.librarySystem.util.ValidateInput interface to validate user input
  *  for various criteria such as names, email addresses, passwords, and options.
  */
-public class ValidateUserInput implements ValidateInput {
+public class ValidateUserInput implements IValidateInput {
 
     @Override
     public Response validateName(String name) {

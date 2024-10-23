@@ -1,17 +1,19 @@
-package util;
+package main.java.com.librarySystem.util;
 
 import java.util.Scanner;
 /**
  * This class is used to read users inputs
  */
 public class Console {
-    private static final Scanner SCANNER = new Scanner(System.in);
-
-    public static String readString(String prompt){
+    private Scanner scanner;
+    public Console(){
+        this.scanner = new Scanner(System.in);
+    }
+    public String readString(String prompt){
         String value;
         while(true) {
             System.out.print(prompt +": ");
-            value = SCANNER.nextLine().toUpperCase().trim();
+            value = scanner.nextLine().toUpperCase().trim();
             if(value.isEmpty()){
                 System.out.println(prompt + " can't be empty");
             }
@@ -22,12 +24,12 @@ public class Console {
         return value;
     }
 
-    public static int readInt(String prompt){
+    public int readInt(String prompt){
         int option;
         while (true) {
             try {
                 System.out.print(prompt +": ");
-                String userOption = SCANNER.nextLine().trim();
+                String userOption = scanner.nextLine().trim();
                 if(userOption.isEmpty()){
                     System.out.println(prompt + " can't be empty");
                     continue;

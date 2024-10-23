@@ -1,19 +1,18 @@
-package library;
+package main.java.com.librarySystem;
 
-import users.User;
-import util.*;
-import response.Response;
-import validateInput.ValidateInput;
+import main.java.com.librarySystem.model.Book;
+import main.java.com.librarySystem.user.User;
+import main.java.com.librarySystem.util.*;
+import main.java.com.librarySystem.util.Response;
+import main.java.com.librarySystem.util.IValidateInput;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Library {
+    Console console = new Console();
     public static List<Book> books = new ArrayList<>();
     public static List<User> users = new ArrayList<>();
-    private final ValidateInput VALIDATE = Utils.validate;
+    private final IValidateInput VALIDATE = Utils.validate;
    private static HashMap<Borrower, List<TypeOfBorrowedBook>> bookBorrowers = new HashMap<>();
 
 //   type of users who have borrowed a book
@@ -93,7 +92,7 @@ public class Library {
         String bookTitle;
         Response response;
         System.out.println();
-        bookTitle = Console.readString("Book title");
+        bookTitle = console.readString("Book title");
         System.out.println();
 
 //        check if user can borrow book
@@ -144,9 +143,9 @@ public class Library {
 
            for(Book bk : books) {
                if(bk.getTitle().equalsIgnoreCase(bookTitle)) { //check if book exist in library
-                   if((bk.getQuantity() - bk.getAmountBorrowed() > 1)) {
+                   if((bk.getQuantity() - bk.getAvailableCopies() > 1)) {
                        // check if amount of book available is greater than 1
-                       bk.setAmountBorrowed(1);
+                       bk.updateAvailableCopies(1);
                        book = new TypeOfBorrowedBook(bk.getTitle(), bk.getAuthor(), bk.getISBN());
                        return new Response(
                                1, "You have successfully borrowed " + bookTitle, book);
@@ -188,11 +187,11 @@ public class Library {
 
         System.out.println();
         System.out.println("--------------- Enter book details ---------------");
-        title = Console.readString("Title");
-        author = Console.readString("Author");
-        category = Console.readString("Category");
-        ISBN = Console.readString("ISBN");
-        quantity = Console.readInt("Quantity");
+        title = console.readString("Title");
+        author = console.readString("Author");
+        category = console.readString("Category");
+        ISBN = console.readString("ISBN");
+        quantity = console.readInt("Quantity");
 
         if(isBookExist(ISBN)) {
             System.out.println(title + " already exist\n");
@@ -288,7 +287,7 @@ public class Library {
         String query;
         switch (option) {
             case 1 -> {
-                query = Console.readString("Book Title");
+                query = console.readString("Book Title");
                 System.out.println();
                 Book result = searchBookByTitle(query);
 
@@ -301,7 +300,7 @@ public class Library {
             }
 
             case 2 -> {
-                query = Console.readString("Book ISBN");
+                query = console.readString("Book ISBN");
                 System.out.println();
                 Book result = searchBookByIBSN(query);
 
@@ -314,7 +313,7 @@ public class Library {
             }
 
             case 3 -> {
-                query = Console.readString("Book Author");
+                query = console.readString("Book Author");
                 List<Book> result = searchBookByAuthor(query);
 
                 if(result == null)
@@ -329,7 +328,7 @@ public class Library {
             }
 
             case 4 -> {
-                query = Console.readString("Book Category");
+                query = console.readString("Book Category");
                 System.out.println();
                 List<Book> result = searchBookByCategory(query);
 
@@ -353,18 +352,18 @@ public class Library {
 //        UI
         String bookISBN;
         System.out.println();
-        bookISBN = Console.readString("Enter book ISBN");
+        bookISBN = console.readString("Enter book ISBN");
 
         if(!books.isEmpty()) {
             for(Book book : books) {
                 if(book.getISBN().equalsIgnoreCase(bookISBN)) {
-                    if(book.getAmountBorrowed() == 0){
+                    if(book.getAvailableCopies() == 0){
                         books.remove(book);
                         System.out.println(book.getTitle() + " removed from the library");
                     }
                     else {
                         System.out.println("Can't remove " + book.getTitle() + ", " +
-                                "have" + book.getAmountBorrowed() + "copies");
+                                "have" + book.getAvailableCopies() + "copies");
                     }
                     bookFound = true;
                     break;
@@ -412,7 +411,7 @@ public class Library {
             System.out.println();
             userBorrowedBooks.forEach(System.out::println);
             System.out.println();
-            returnBookTile = Console.readString("Book Title You Want To Return");
+            returnBookTile = console.readString("Book Title You Want To Return");
             for(TypeOfBorrowedBook book : userBorrowedBooks){
                 if(book.title.equals(returnBookTile)){
                     for (Book bk : books){
@@ -429,17 +428,17 @@ public class Library {
                 if(totalNumberOfBookBorrowed  > 1) {
                     numberOfReturnCopies =  IterateInput.intInput("How many copies do you wish to return",
                             1, totalNumberOfBookBorrowed, VALIDATE::validateOption);
-                    toBeReturnedBook.setAmountBorrowed(-numberOfReturnCopies);
+                    toBeReturnedBook.setAmountBorrowed(toBeReturnedBook.getAmountBorrowed() - numberOfReturnCopies);
                     String copy = (numberOfReturnCopies > 1) ? "copies" : "copy";
                     System.out.println("You have returned " + numberOfReturnCopies + " "
                             + copy + " of " + returnBookTile);
-                    maninBook.setAmountBorrowed(-numberOfReturnCopies);
+                    maninBook.updateAvailableCopies(maninBook.getAvailableCopies() - numberOfReturnCopies);
                     if(toBeReturnedBook.getAmountBorrowed() <= 0){
                         userBorrowedBooks.remove(toBeReturnedBook);
                     }
                 } else {
                     userBorrowedBooks.remove(toBeReturnedBook);
-                    maninBook.setAmountBorrowed(-1);
+                    maninBook.updateAvailableCopies(maninBook.getAvailableCopies() - 1);
                     System.out.println("You have returned " + returnBookTile);
                 }
 

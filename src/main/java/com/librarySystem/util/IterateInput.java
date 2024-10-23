@@ -1,15 +1,15 @@
-package util;
-
-import response.Response;
+package main.java.com.librarySystem.util;
 
 import java.util.function.Function;
 
+
 public class IterateInput {
+    static Console console = new Console();
     static public String stringInput(String prompt, Function<String, Response> validate) {
         String value;
         Response response;
         while (true) {
-            value = Console.readString(prompt);
+            value = console.readString(prompt);
             response = validate.apply(value);
             if (response.code == 1)
                 break;
@@ -23,7 +23,7 @@ public class IterateInput {
         int option;
         Response response;
         while (true) {
-            option = Console.readInt(prompt);
+            option = console.readInt(prompt);
             response = validate.apply(option, min, max);
             if (response.code == 1)
                 break;

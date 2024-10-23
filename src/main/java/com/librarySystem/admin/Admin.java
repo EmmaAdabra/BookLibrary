@@ -1,20 +1,22 @@
-package users;
+package main.java.com.librarySystem.admin;
 
-import util.IterateInput;
-import UIs.RegisterUser;
+import main.java.com.librarySystem.user.User;
+import main.java.com.librarySystem.util.IValidateInput;
+import main.java.com.librarySystem.util.IterateInput;
+import main.java.com.librarySystem.UIs.RegisterUser;
 
-public class Librarian extends User {
-    public Librarian(String name, String email, String password) {
-        super(name, email, password);
+public class Admin extends User {
+    public Admin(String name, String email, String password, IValidateInput validate) {
+        super(name, email, password, validate);
     }
 
-    RegisterUser registerUser = new RegisterUser();
+    RegisterUser registerUser = new RegisterUser(validate);
 
     @Override
     public void userUI() {
         while (isOnline) {
             System.out.println();
-            System.out.println("--------------- Main Menu ---------------");
+            System.out.println("--------------- main.java.com.librarySystem.Main Menu ---------------");
             System.out.println("1. Add book");
             System.out.println("2. To view all book");
             System.out.println("3. Search for book");

@@ -1,9 +1,8 @@
-package users;
+package main.java.com.librarySystem.user;
 
-import library.Library;
-import util.IterateInput;
-import util.Utils;
-import validateInput.ValidateInput;
+import main.java.com.librarySystem.Library;
+import main.java.com.librarySystem.util.IterateInput;
+import main.java.com.librarySystem.util.IValidateInput;
 
 import java.util.List;
 
@@ -14,19 +13,20 @@ import java.util.List;
  * It provides methods for logging in and out.
  */
 public class User {
-    Library library = new Library();
-    ValidateInput validate = Utils.validate;
-    private String userName;
-    private String userEmail;
-    private String userPassword;
+    protected Library library = new Library();
+    protected IValidateInput validate;
+    protected String userName;
+    protected String userEmail;
+    protected String userPassword;
 
-    public String privilege;
+    protected String privilege;
     public boolean isOnline;
 
-    public User(String name, String email, String password) {
+    public User(String name, String email, String password, IValidateInput validate) {
         this.userName = name;
         this.userEmail = email;
         this.userPassword = password;
+        this.validate = validate;
         setPrivilege();
     }
 

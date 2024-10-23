@@ -1,15 +1,15 @@
-package UIs;
+package main.java.com.librarySystem.UIs;
 
-import library.Library;
-import users.User;
-import util.IterateInput;
-import util.Utils;
-import validateInput.ValidateInput;
+import main.java.com.librarySystem.Library;
+import main.java.com.librarySystem.user.User;
+import main.java.com.librarySystem.util.IterateInput;
+import main.java.com.librarySystem.util.Utils;
+import main.java.com.librarySystem.util.IValidateInput;
 
 import java.util.List;
 
 public class LoginUser {
-    private static final ValidateInput VALIDATE = Utils.validate;
+    private static final IValidateInput VALIDATE = Utils.validate;
     static List<User> users = Library.users;
 
     public static void getLoginDetails(){

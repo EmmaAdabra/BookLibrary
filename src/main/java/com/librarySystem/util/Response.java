@@ -1,4 +1,4 @@
-package response;
+package main.java.com.librarySystem.util;
 
 public class Response {
     public int code;

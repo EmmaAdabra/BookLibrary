@@ -1,4 +1,4 @@
-package library;
+package main.java.com.librarySystem.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -6,14 +6,12 @@ import java.util.Objects;
 public class Book {
     private String title;
     private String author;
-    private int bookID;
     private String category;
     private String ISBN;
 
-    private int amountBorrowed = 0;
 
-    private int amountLeft = 0;
     private int quantity;
+    private int availableCopies;
     private LocalDate dateAdded;
 
     public Book(String title, String author, String category, String ISBN, int quantity) {
@@ -21,20 +19,23 @@ public class Book {
         this.author = author;
         this.category = category;
         this.ISBN = ISBN;
-        this.quantity = quantity;
-        setDateAdded();
-        setBookID();
+        setQuantity(quantity);
+        this.dateAdded = setDateAdded();
     }
 
-    public void getBookDetails() {
-        System.out.println(this);
+    public boolean canBorrow(){
+        if(availableCopies > 1) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override
     public String toString() {
         return "Title: " + title + "\nAuthor: " + author + "\nISBN: " + ISBN +
                 "\nCategory: " + category + "\nQuantity: " + quantity
-                + "\nDate Added: " + dateAdded + "\nAmount Borrowed: " + getAmountBorrowed();
+                + "\nDate Added: " + dateAdded + "\nAvailable Copies: " + getAvailableCopies();
     }
 
     @Override
@@ -49,16 +50,13 @@ public class Book {
         return Objects.hash(getISBN());
     }
 
-    private void setDateAdded() {
-        this.dateAdded = LocalDate.now();
+    private LocalDate setDateAdded() {
+        return LocalDate.now();
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    private void setBookID() {
-        this.bookID = (Library.books.size() + 1);
+        this.availableCopies = quantity;
     }
 
     public int getQuantity() {
@@ -81,19 +79,12 @@ public class Book {
         return category;
     }
 
-    public int getAmountBorrowed() {
-        return amountBorrowed;
+    public int getAvailableCopies() {
+        return availableCopies;
     }
 
-    public void setAmountBorrowed(int amountBorrowed) {
-        this.amountBorrowed += amountBorrowed;
-    }
+    public void updateAvailableCopies(int availableCopies) {
 
-    public int getAmountLeft() {
-        return amountLeft;
-    }
-
-    public void setAmountLeft(int amountLeft) {
-        this.amountLeft = amountLeft;
+        this.availableCopies = availableCopies;
     }
 }

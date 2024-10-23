@@ -1,18 +1,20 @@
-package UIs;
+package main.java.com.librarySystem.UIs;
 
-import library.Library;
-import users.Librarian;
-import users.User;
-import util.IterateInput;
-import util.Utils;
-import validateInput.ValidateInput;
+import main.java.com.librarySystem.Library;
+import main.java.com.librarySystem.admin.Admin;
+import main.java.com.librarySystem.user.User;
+import main.java.com.librarySystem.util.IterateInput;
+import main.java.com.librarySystem.util.IValidateInput;
 
 public class RegisterUser {
     private String name;
     private String email;
     private String password;
 //    private List<User> users = new ArrayList<>();
-    private final ValidateInput VALIDATE = Utils.validate;
+    private IValidateInput validateInput;
+    public RegisterUser(IValidateInput validateInput) {
+        this.validateInput = validateInput;
+    }
 
     public void registrationUI() {
         int option;
@@ -23,7 +25,7 @@ public class RegisterUser {
             System.out.println("2. Login");
             System.out.println("0. Quit");
             System.out.println();
-            option = IterateInput.intInput("option", 0, 2, VALIDATE::validateOption);
+            option = IterateInput.intInput("option", 0, 2, validateInput::validateOption);
             switch (option) {
                 case 1 -> getUserDetails();
                 case 2 -> LoginUser.getLoginDetails();
@@ -53,16 +55,16 @@ public class RegisterUser {
         System.out.println("Choose account type:");
         System.out.println("1. User");
         System.out.println("2. Admin");
-        userOption = IterateInput.intInput("Account type", 1, 2, VALIDATE::validateOption);
+        userOption = IterateInput.intInput("Account type", 1, 2, validateInput::validateOption);
         createAccount(userOption);
     }
 
     private void createAccount(int accountType) {
         if (accountType == 2) {
-            Librarian admin = new Librarian(name, email, password);
+            Admin admin = new Admin(name, email, password, validateInput);
             Library.users.add(admin);
         } else {
-            User user = new User(name, email, password);
+            User user = new User(name, email, password, validateInput);
             Library.users.add(user);
         }
         System.out.println("Account created successfully!!!");
@@ -79,15 +81,15 @@ public class RegisterUser {
     }
 
     private void setName() {
-        this.name = IterateInput.stringInput("username", VALIDATE::validateName);
+        this.name = IterateInput.stringInput("username", validateInput::validateName);
     }
 
     private void setEmail() {
         this.email = IterateInput.stringInput("email",
-                VALIDATE::validateEmail).toLowerCase();
+                validateInput::validateEmail).toLowerCase();
     }
     private void setPassword() {
         this.password = IterateInput.stringInput("password",
-                VALIDATE::validatePassword);
+                validateInput::validatePassword);
     }
 }
