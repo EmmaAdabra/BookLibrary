@@ -154,8 +154,10 @@ public class UserService implements IUserService{
                     + qtyBorrowed + " " + copy + " of " + bookTitle + " or less", null);
         }
 
+//        uses merge method
 //        userBorrowedBook.merge(toBeReturnedBook, -returnQty, (oldValue, newValue) -> (oldValue + newValue <= 0)  ?
 //                null: oldValue + newValue);
+
         userBorrowedBook.compute(toBeReturnedBook, (book, bookQty) ->
                 (bookQty == null || bookQty - returnQty <= 0 ? null : bookQty - returnQty));
         toBeReturnedBook.updateAvailableCopies(toBeReturnedBook.getAvailableCopies() + returnQty);

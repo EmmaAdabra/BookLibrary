@@ -15,10 +15,14 @@ public class BorrowedBookRepo implements IBorrowedBookRepo {
         if(user == null || book == null) {
             return false;
         }
+
+//        uses computeIfAbsent method
 //        Map<Book, Integer> userBorrowedBooks = borrowRecords.computeIfAbsent(user, k -> new HashMap<>());
 
+//        uses merge method
 //        userBorrowedBooks.merge(book, 1, Integer::sum);
 
+//        uses compute method
 //        userBorrowedBooks.compute(book, (b, count) -> (count == null) ? 1 : count + 1);
 
 //        if(userBorrowedBooks.containsKey(book)){
@@ -28,6 +32,7 @@ public class BorrowedBookRepo implements IBorrowedBookRepo {
 //            userBorrowedBooks.put(book, 1);
 //        }
 
+//        uses getOrDefault method
         Map<Book, Integer> userBorrowedBooks = borrowRecords.getOrDefault(user, new HashMap<>());
         userBorrowedBooks.put(book, userBorrowedBooks.getOrDefault(book, 0) + 1);
         borrowRecords.put(user, userBorrowedBooks);
