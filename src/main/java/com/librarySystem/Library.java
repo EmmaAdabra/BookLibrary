@@ -5,11 +5,12 @@ import main.java.com.librarySystem.user.User;
 import main.java.com.librarySystem.util.*;
 import main.java.com.librarySystem.util.Response;
 import main.java.com.librarySystem.util.IValidateInput;
+import main.java.com.librarySystem.util.Scanner;
 
 import java.util.*;
 
 public class Library {
-    Console console = new Console();
+    Scanner scanner = new Scanner();
     public static List<Book> books = new ArrayList<>();
     public static List<User> users = new ArrayList<>();
     private final IValidateInput VALIDATE = Utils.validate;
@@ -92,7 +93,7 @@ public class Library {
         String bookTitle;
         Response response;
         System.out.println();
-        bookTitle = console.readString("Book title");
+        bookTitle = scanner.readString("Book title");
         System.out.println();
 
 //        check if user can borrow book
@@ -187,11 +188,11 @@ public class Library {
 
         System.out.println();
         System.out.println("--------------- Enter book details ---------------");
-        title = console.readString("Title");
-        author = console.readString("Author");
-        category = console.readString("Category");
-        ISBN = console.readString("ISBN");
-        quantity = console.readInt("Quantity");
+        title = scanner.readString("Title");
+        author = scanner.readString("Author");
+        category = scanner.readString("Category");
+        ISBN = scanner.readString("ISBN");
+        quantity = scanner.readInt("Quantity");
 
         if(isBookExist(ISBN)) {
             System.out.println(title + " already exist\n");
@@ -287,7 +288,7 @@ public class Library {
         String query;
         switch (option) {
             case 1 -> {
-                query = console.readString("Book Title");
+                query = scanner.readString("Book Title");
                 System.out.println();
                 Book result = searchBookByTitle(query);
 
@@ -300,7 +301,7 @@ public class Library {
             }
 
             case 2 -> {
-                query = console.readString("Book ISBN");
+                query = scanner.readString("Book ISBN");
                 System.out.println();
                 Book result = searchBookByIBSN(query);
 
@@ -313,7 +314,7 @@ public class Library {
             }
 
             case 3 -> {
-                query = console.readString("Book Author");
+                query = scanner.readString("Book Author");
                 List<Book> result = searchBookByAuthor(query);
 
                 if(result == null)
@@ -328,7 +329,7 @@ public class Library {
             }
 
             case 4 -> {
-                query = console.readString("Book Category");
+                query = scanner.readString("Book Category");
                 System.out.println();
                 List<Book> result = searchBookByCategory(query);
 
@@ -352,7 +353,7 @@ public class Library {
 //        UI
         String bookISBN;
         System.out.println();
-        bookISBN = console.readString("Enter book ISBN");
+        bookISBN = scanner.readString("Enter book ISBN");
 
         if(!books.isEmpty()) {
             for(Book book : books) {
@@ -411,7 +412,7 @@ public class Library {
             System.out.println();
             userBorrowedBooks.forEach(System.out::println);
             System.out.println();
-            returnBookTile = console.readString("Book Title You Want To Return");
+            returnBookTile = scanner.readString("Book Title You Want To Return");
             for(TypeOfBorrowedBook book : userBorrowedBooks){
                 if(book.title.equals(returnBookTile)){
                     for (Book bk : books){

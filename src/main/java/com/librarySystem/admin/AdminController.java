@@ -16,7 +16,7 @@ public class AdminController extends UserController {
     private IAdminService adminService;
 
     public AdminController(IUserRepository userRepository, IBookRepository bookRepository,
-                           IBorrowedBookRepo borrowedBooksRepo, Console scanner, IValidateInput validateInput) {
+                           IBorrowedBookRepo borrowedBooksRepo, Scanner scanner, IValidateInput validateInput) {
         super(userRepository, bookRepository, borrowedBooksRepo, scanner, validateInput);
         this.adminService = new AdminService(userRepository, bookRepository, borrowedBooksRepo);
     }

@@ -1,13 +1,12 @@
 package main.java.com.librarySystem.util;
 
-import java.util.Scanner;
 /**
  * This class is used to read users inputs
  */
-public class Console {
-    private Scanner scanner;
-    public Console(){
-        this.scanner = new Scanner(System.in);
+public class Scanner {
+    private java.util.Scanner scanner;
+    public Scanner(){
+        this.scanner = new java.util.Scanner(System.in);
     }
     public String readString(String prompt){
         String value;

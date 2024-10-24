@@ -11,14 +11,14 @@ import java.util.List;
 
 public class UserController {
     protected IUserService userService;
-    protected Console scanner;
+    protected Scanner scanner;
     protected IValidateInput validateInput;
 
     protected RUser loggedInUser;
 
     public UserController(IUserRepository userRepository, IBookRepository bookRepository,
                           IBorrowedBookRepo borrowedBooksRepo,
-                          Console scanner, IValidateInput validateInput) {
+                          Scanner scanner, IValidateInput validateInput) {
         this.userService = new UserService(userRepository, bookRepository, borrowedBooksRepo);
         this.scanner = scanner;
         this.validateInput = validateInput;

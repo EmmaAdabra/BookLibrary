@@ -4,14 +4,14 @@ import java.util.function.Function;
 
 
 public class IterateInput {
-    static Console console = new Console();
+    static Scanner scanner = new Scanner();
     static public String stringInput(String prompt, Function<String, Response> validate) {
         String value;
         Response response;
         while (true) {
-            value = console.readString(prompt);
+            value = scanner.readString(prompt);
             response = validate.apply(value);
-            if (response.code == 1)
+            if (response.status)
                 break;
             System.out.println(response.message);
         }
@@ -23,9 +23,9 @@ public class IterateInput {
         int option;
         Response response;
         while (true) {
-            option = console.readInt(prompt);
+            option = scanner.readInt(prompt);
             response = validate.apply(option, min, max);
-            if (response.code == 1)
+            if (response.status)
                 break;
             System.out.println(response.message);
         }
