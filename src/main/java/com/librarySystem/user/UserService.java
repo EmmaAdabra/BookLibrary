@@ -26,7 +26,7 @@ public class UserService implements IUserService{
             return false;
         }
 
-        userRepository.add(newUser);
+        userRepository.addUser(newUser);
 
         return true;
     }
