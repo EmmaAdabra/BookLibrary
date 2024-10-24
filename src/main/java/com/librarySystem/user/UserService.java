@@ -4,7 +4,7 @@ import main.java.com.librarySystem.model.Book;
 import main.java.com.librarySystem.repository.IBookRepository;
 import main.java.com.librarySystem.repository.IBorrowedBookRepo;
 import main.java.com.librarySystem.repository.IUserRepository;
-import main.java.com.librarySystem.util.NewResponse;
+import main.java.com.librarySystem.util.Response;
 
 import java.util.List;
 import java.util.Map;
@@ -42,33 +42,33 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public NewResponse getAllBooks() {
+    public Response getAllBooks() {
         List<Book> books = bookRepository.getBooks();
         if(books.size() == 0) {
-            return new NewResponse(false, "No book found", null);
+            return new Response(false, "No book found", null);
         }
 
-        return new NewResponse(true, "books found", books);
+        return new Response(true, "books found", books);
     }
 
     @Override
-    public NewResponse getUserByEmail(String email) {
+    public Response getUserByEmail(String email) {
         RUser user = userRepository.getUserByEmail(email);
         if(user == null){
-            return new NewResponse(false, "User not found", null);
+            return new Response(false, "User not found", null);
         }
 
-        return new NewResponse(true, "found user", user);
+        return new Response(true, "found user", user);
     }
 
     @Override
-    public NewResponse searchBook(String searchType, String search) {
+    public Response searchBook(String searchType, String search) {
         switch (searchType) {
             case "title" -> {
                 Book searchBook = bookRepository.getBookByTitle(search);
 
                 if(searchBook != null) {
-                    return new NewResponse(true, "Book found", searchBook);
+                    return new Response(true, "Book found", searchBook);
                 }
             }
 
@@ -76,7 +76,7 @@ public class UserService implements IUserService{
                 Book searchBook = bookRepository.getBookByISBN(search);
 
                 if(searchBook != null){
-                    return new NewResponse(true, "Book found", searchBook);
+                    return new Response(true, "Book found", searchBook);
                 }
             }
 
@@ -84,39 +84,39 @@ public class UserService implements IUserService{
                 List<Book> searchBooks = bookRepository.getBookByCategory(search);
 
                 if(searchBooks != null){
-                    return new NewResponse(true, "Book found", searchBooks);
+                    return new Response(true, "Book found", searchBooks);
                 } else {
-                    return new NewResponse(false, "No book in this category", null);
+                    return new Response(false, "No book in this category", null);
                 }
             }
         }
 
-        return new NewResponse(false, search + " not found", null);
+        return new Response(false, search + " not found", null);
     }
 
     @Override
-    public NewResponse borrowBook(RUser user, String title) {
+    public Response borrowBook(RUser user, String title) {
         final int MAX_BORROW_BOOKS = 3;
 
-        NewResponse response = null;
+        Response response = null;
         Book toBeBorrowedBook = bookRepository.getBookByTitle(title);
 
         if(toBeBorrowedBook == null){
-            return new NewResponse(false, title + " not found", null);
+            return new Response(false, title + " not found", null);
         }
 
         if(borrowedBooksRepo.totalBookBorrowed(user) >= MAX_BORROW_BOOKS) {
-            return new NewResponse(false, "You can't borrow more than "
+            return new Response(false, "You can't borrow more than "
                     + MAX_BORROW_BOOKS + " books", null);
         }
 
         if(!toBeBorrowedBook.canBorrow()) {
-            return new NewResponse(false, "You Can't borrow " + title + ", only one copy left", null);
+            return new Response(false, "You Can't borrow " + title + ", only one copy left", null);
         }
 
         borrowedBooksRepo.addBorrowRecord(user, toBeBorrowedBook);
         toBeBorrowedBook.updateAvailableCopies(toBeBorrowedBook.getAvailableCopies() - 1);
-        return new NewResponse(true, "you have successfully borrowed " + title, null);
+        return new Response(true, "you have successfully borrowed " + title, null);
     }
 
     @Override
@@ -127,22 +127,22 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public NewResponse returnBook(RUser user, String bookTitle, int returnQty) {
+    public Response returnBook(RUser user, String bookTitle, int returnQty) {
         var userBorrowedBook = borrowedBooksRepo.getUserBorrowedBooks(user);
 
         if(userBorrowedBook.isEmpty()) {
-            return new NewResponse(false, "You have not borrowed any book", null);
+            return new Response(false, "You have not borrowed any book", null);
         }
 
         var toBeReturnedBook = bookRepository.getBookByTitle(bookTitle);
 
         if(toBeReturnedBook == null) {
-            return new NewResponse(false,
+            return new Response(false,
                     bookTitle + ", it is not in our system", null);
         }
 
         if(userBorrowedBook.get(toBeReturnedBook) == null) {
-            return new NewResponse(false, "You didn't borrow " + bookTitle, null);
+            return new Response(false, "You didn't borrow " + bookTitle, null);
         }
 
         int qtyBorrowed = userBorrowedBook.get(toBeReturnedBook);
@@ -150,7 +150,7 @@ public class UserService implements IUserService{
 
         if(returnQty > qtyBorrowed) {
             String copy = qtyBorrowed > 1 ? "copies" : "copy";
-            return new NewResponse(false, "You can only return "
+            return new Response(false, "You can only return "
                     + qtyBorrowed + " " + copy + " of " + bookTitle + " or less", null);
         }
 
@@ -159,6 +159,6 @@ public class UserService implements IUserService{
         userBorrowedBook.compute(toBeReturnedBook, (book, bookQty) ->
                 (bookQty == null || bookQty - returnQty <= 0 ? null : bookQty - returnQty));
         toBeReturnedBook.updateAvailableCopies(toBeReturnedBook.getAvailableCopies() + returnQty);
-        return new NewResponse(true, "You have successfully return " + bookTitle, null);
+        return new Response(true, "You have successfully return " + bookTitle, null);
     }
 }

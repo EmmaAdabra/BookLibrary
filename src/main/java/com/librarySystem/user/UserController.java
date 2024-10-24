@@ -103,7 +103,7 @@ public class UserController {
 
     protected void searchForBook() {
         String query;
-        NewResponse response = null;
+        Response response = null;
         System.out.println();
         String heading = "Search by:";
         String[] searchOptions = new String[]{"Book Title", "Book ISBN", "Book Category"};

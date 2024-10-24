@@ -2,8 +2,7 @@ package main.java.com.librarySystem.auth;
 
 import main.java.com.librarySystem.repository.IUserRepository;
 import main.java.com.librarySystem.user.RUser;
-import main.java.com.librarySystem.util.IValidateInput;
-import main.java.com.librarySystem.util.NewResponse;
+import main.java.com.librarySystem.util.Response;
 
 public class AuthServices implements IAuthServices{
     IUserRepository userRepository;
@@ -13,12 +12,12 @@ public class AuthServices implements IAuthServices{
     }
 
     @Override
-    public NewResponse verifyLogin(String email, String password) {
+    public Response verifyLogin(String email, String password) {
         RUser user = userRepository.getUserByEmail(email);
         if(user == null || !user.getUserPassword().equals(password)) {
-            return new NewResponse(false, "Invalid login details", null);
+            return new Response(false, "Invalid login details", null);
         }
 
-        return new NewResponse(true, "success", user);
+        return new Response(true, "success", user);
     }
 }

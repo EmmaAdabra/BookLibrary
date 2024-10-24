@@ -6,7 +6,7 @@ import main.java.com.librarySystem.user.RUser;
 import main.java.com.librarySystem.user.UserController;
 import main.java.com.librarySystem.util.IValidateInput;
 import main.java.com.librarySystem.util.IterateInput;
-import main.java.com.librarySystem.util.NewResponse;
+import main.java.com.librarySystem.util.Response;
 
 public class AuthController {
     UserController userController;
@@ -28,7 +28,7 @@ public class AuthController {
         String email = IterateInput.stringInput("email", validateInput::validateEmail);
         String password = IterateInput.stringInput("password", validateInput::validatePassword);
 
-        NewResponse response = authServices.verifyLogin(email, password);
+        Response response = authServices.verifyLogin(email, password);
         if(response.status) {
            RUser loggedInUser = (RUser)response.obj;
 

@@ -6,7 +6,7 @@ import main.java.com.librarySystem.repository.IBorrowedBookRepo;
 import main.java.com.librarySystem.repository.IUserRepository;
 import main.java.com.librarySystem.user.RUser;
 import main.java.com.librarySystem.user.UserService;
-import main.java.com.librarySystem.util.NewResponse;
+import main.java.com.librarySystem.util.Response;
 
 import java.util.Collections;
 import java.util.Map;
@@ -24,13 +24,13 @@ public class AdminService extends UserService implements IAdminService {
     }
 
     @Override
-    public NewResponse addBook(Book book) {
+    public Response addBook(Book book) {
         if(bookRepository.getBookByISBN(book.getISBN()) != null){
-            return new NewResponse(false, book.getTitle() + " already exist", null);
+            return new Response(false, book.getTitle() + " already exist", null);
         }
 
         bookRepository.addBook(book);
-        return new NewResponse(true, "success", null);
+        return new Response(true, "success", null);
     }
 
     @Override
