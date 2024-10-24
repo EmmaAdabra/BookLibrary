@@ -4,7 +4,7 @@ import main.java.com.librarySystem.model.Role;
 
 import java.util.Objects;
 
-public class RUser {
+public class User {
     private String userName;
     private String userEmail;
     private String userPassword;
@@ -12,7 +12,7 @@ public class RUser {
 
     private boolean isLoggedIn;
 
-    public RUser(String name, String email, String password, Role role) {
+    public User(String name, String email, String password, Role role) {
         this.userName = name;
         this.userEmail = email;
         this.userPassword = password;
@@ -58,7 +58,7 @@ public class RUser {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RUser user)) return false;
+        if (!(o instanceof User user)) return false;
         return getUserEmail().equals(user.getUserEmail());
     }
 

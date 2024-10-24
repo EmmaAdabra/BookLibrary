@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 public interface IUserService {
-    Boolean addUser(RUser newUser);
-    List<RUser> getUsers();
+    Boolean addUser(User newUser);
+    List<User> getUsers();
 //    NewResponse verifyLogin(String email, String password);
     Response getUserByEmail(String email);
     Response getAllBooks();
     Response searchBook(String searchType, String search);
-    Response borrowBook(RUser user, String bookTitle);
-    Map<Book, Integer> viewBorrowedBooks(RUser user);
-    Response returnBook(RUser user, String bookTitle, int returnQty);
+    Response borrowBook(User user, String bookTitle);
+    Map<Book, Integer> viewBorrowedBooks(User user);
+    Response returnBook(User user, String bookTitle, int returnQty);
 }
 

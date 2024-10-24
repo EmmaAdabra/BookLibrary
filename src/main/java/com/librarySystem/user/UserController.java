@@ -14,7 +14,7 @@ public class UserController {
     protected Scanner scanner;
     protected IValidateInput validateInput;
 
-    protected RUser loggedInUser;
+    protected User loggedInUser;
 
     public UserController(IUserRepository userRepository, IBookRepository bookRepository,
                           IBorrowedBookRepo borrowedBooksRepo,
@@ -41,7 +41,7 @@ public class UserController {
         System.out.println();
 
 //        create user
-        RUser newUser = new RUser(name, email, password, role);
+        User newUser = new User(name, email, password, role);
 
 //        add user to repository
         Boolean isRegister = userService.addUser(newUser);
@@ -53,7 +53,7 @@ public class UserController {
 
     }
 
-    public void handleLogin(RUser user) {
+    public void handleLogin(User user) {
         if (user.getRole() == Role.USER) {
             this.loggedInUser = user;
             user.login();
@@ -61,7 +61,7 @@ public class UserController {
         }
     }
 
-    protected void displayMenu(RUser user) {
+    protected void displayMenu(User user) {
         String heading = "--------------- Main Menu ---------------";
         String[] menuOptions = new String[]{"View All Books", "Search for Book",
                 "Borrow Book", "Return Book", "View Borrowed Books", "Logout"};
@@ -166,7 +166,7 @@ public class UserController {
     }
 
 
-    protected void viewBorrowedBooks(RUser user) {
+    protected void viewBorrowedBooks(User user) {
         System.out.println();
         System.out.println("--------------- All Borrowed Books ---------------");
         System.out.println();

@@ -21,7 +21,7 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public Boolean addUser(RUser newUser) {
+    public Boolean addUser(User newUser) {
         if(userRepository.getUserByEmail(newUser.getUserEmail()) != null){
             return false;
         }
@@ -32,8 +32,8 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public List<RUser> getUsers() {
-        List<RUser> users = userRepository.getUsers();
+    public List<User> getUsers() {
+        List<User> users = userRepository.getUsers();
         if(users.size() == 0){
             return null;
         }
@@ -53,7 +53,7 @@ public class UserService implements IUserService{
 
     @Override
     public Response getUserByEmail(String email) {
-        RUser user = userRepository.getUserByEmail(email);
+        User user = userRepository.getUserByEmail(email);
         if(user == null){
             return new Response(false, "User not found", null);
         }
@@ -95,7 +95,7 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public Response borrowBook(RUser user, String title) {
+    public Response borrowBook(User user, String title) {
         final int MAX_BORROW_BOOKS = 3;
 
         Response response = null;
@@ -120,14 +120,14 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public Map<Book, Integer> viewBorrowedBooks(RUser user) {
+    public Map<Book, Integer> viewBorrowedBooks(User user) {
         var userBorrowedBooks = borrowedBooksRepo.getUserBorrowedBooks(user);
 
         return userBorrowedBooks;
     }
 
     @Override
-    public Response returnBook(RUser user, String bookTitle, int returnQty) {
+    public Response returnBook(User user, String bookTitle, int returnQty) {
         var userBorrowedBook = borrowedBooksRepo.getUserBorrowedBooks(user);
 
         if(userBorrowedBook.isEmpty()) {

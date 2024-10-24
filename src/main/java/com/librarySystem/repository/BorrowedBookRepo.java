@@ -1,17 +1,17 @@
 package main.java.com.librarySystem.repository;
 
 import main.java.com.librarySystem.model.Book;
-import main.java.com.librarySystem.user.RUser;
+import main.java.com.librarySystem.user.User;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BorrowedBookRepo implements IBorrowedBookRepo {
-    Map<RUser, Map<Book, Integer>> borrowRecords = new HashMap<>();
+    Map<User, Map<Book, Integer>> borrowRecords = new HashMap<>();
 
     @Override
-    public boolean addBorrowRecord(RUser user, Book book) {
+    public boolean addBorrowRecord(User user, Book book) {
         if(user == null || book == null) {
             return false;
         }
@@ -36,12 +36,12 @@ public class BorrowedBookRepo implements IBorrowedBookRepo {
     }
 
     @Override
-    public Map<Book, Integer> getUserBorrowedBooks(RUser user) {
+    public Map<Book, Integer> getUserBorrowedBooks(User user) {
         return borrowRecords.getOrDefault(user, Collections.emptyMap());
     }
 
     @Override
-    public int totalBookBorrowed(RUser user) {
+    public int totalBookBorrowed(User user) {
         var userBorrowedBooks = getUserBorrowedBooks(user);
 
         if(userBorrowedBooks == null) return 0;
@@ -52,7 +52,7 @@ public class BorrowedBookRepo implements IBorrowedBookRepo {
     }
 
     @Override
-    public Map<RUser, Map<Book, Integer>> getBorrowRecord() {
+    public Map<User, Map<Book, Integer>> getBorrowRecord() {
         return borrowRecords;
     }
 }

@@ -5,7 +5,7 @@ import main.java.com.librarySystem.model.Role;
 import main.java.com.librarySystem.repository.IBookRepository;
 import main.java.com.librarySystem.repository.IBorrowedBookRepo;
 import main.java.com.librarySystem.repository.IUserRepository;
-import main.java.com.librarySystem.user.RUser;
+import main.java.com.librarySystem.user.User;
 import main.java.com.librarySystem.user.UserController;
 import main.java.com.librarySystem.util.*;
 
@@ -22,7 +22,7 @@ public class AdminController extends UserController {
     }
 
     @Override
-    public void handleLogin(RUser user) {
+    public void handleLogin(User user) {
         if (user.getRole() == Role.ADMIN) {
 //            this.loggedInUser = user;
             user.login();
@@ -31,7 +31,7 @@ public class AdminController extends UserController {
     }
 
     @Override
-    protected void displayMenu(RUser user) {
+    protected void displayMenu(User user) {
         System.out.println();
         String heading = "--------------- Main Menu ---------------";
         String[] menuOptions = new String[]{
@@ -83,7 +83,7 @@ public class AdminController extends UserController {
         System.out.println();
         System.out.println("---------------- All registered users ---------------");
         System.out.println();
-        List<RUser> users = userService.getUsers();
+        List<User> users = userService.getUsers();
         if (users == null) {
             System.out.println("0 registered users");
         } else {
@@ -103,7 +103,7 @@ public class AdminController extends UserController {
 
         if(!borrowRecord.isEmpty()) {
             int userCount = borrowRecord.size();
-            Set<RUser> users = borrowRecord.keySet();
+            Set<User> users = borrowRecord.keySet();
 
             users.forEach(user -> {
                 String userDetails = user.getUserName() + " (" + Utils.maskEmail(user.getUserEmail()) +")";

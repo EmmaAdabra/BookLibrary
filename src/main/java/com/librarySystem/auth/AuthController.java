@@ -2,7 +2,7 @@ package main.java.com.librarySystem.auth;
 
 import main.java.com.librarySystem.admin.AdminController;
 import main.java.com.librarySystem.repository.IUserRepository;
-import main.java.com.librarySystem.user.RUser;
+import main.java.com.librarySystem.user.User;
 import main.java.com.librarySystem.user.UserController;
 import main.java.com.librarySystem.util.IValidateInput;
 import main.java.com.librarySystem.util.IterateInput;
@@ -30,7 +30,7 @@ public class AuthController {
 
         Response response = authServices.verifyLogin(email, password);
         if(response.status) {
-           RUser loggedInUser = (RUser)response.obj;
+           User loggedInUser = (User)response.obj;
 
             switch (loggedInUser.getRole()){
                 case ADMIN -> {

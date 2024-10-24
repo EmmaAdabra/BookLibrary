@@ -4,7 +4,7 @@ import main.java.com.librarySystem.model.Book;
 import main.java.com.librarySystem.repository.IBookRepository;
 import main.java.com.librarySystem.repository.IBorrowedBookRepo;
 import main.java.com.librarySystem.repository.IUserRepository;
-import main.java.com.librarySystem.user.RUser;
+import main.java.com.librarySystem.user.User;
 import main.java.com.librarySystem.user.UserService;
 import main.java.com.librarySystem.util.Response;
 
@@ -34,7 +34,7 @@ public class AdminService extends UserService implements IAdminService {
     }
 
     @Override
-    public Map<RUser, Map<Book, Integer>> getBorrowRecord() {
+    public Map<User, Map<Book, Integer>> getBorrowRecord() {
         var borrowRecords = borrowedBooksRepo.getBorrowRecord();
         if(!borrowRecords.isEmpty()){
             return borrowRecords;

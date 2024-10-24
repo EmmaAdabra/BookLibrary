@@ -1,26 +1,26 @@
 package main.java.com.librarySystem.repository;
 
-import main.java.com.librarySystem.user.RUser;
+import main.java.com.librarySystem.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository implements IUserRepository {
-    List<RUser> users = new ArrayList<>();
+    List<User> users = new ArrayList<>();
 
     @Override
-    public List<RUser> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
     @Override
-    public void add(RUser user) {
+    public void add(User user) {
         users.add(user);
     }
 
     @Override
-    public RUser getUserByEmail(String email) {
-        for(RUser user : users) {
+    public User getUserByEmail(String email) {
+        for(User user : users) {
             if(user.getUserEmail().equalsIgnoreCase(email)){
                 return user;
             }
