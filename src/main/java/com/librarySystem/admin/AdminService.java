@@ -13,14 +13,9 @@ import java.util.Map;
 
 
 public class AdminService extends UserService implements IAdminService {
-//    private IBookRepository bookRepository;
-//    private IUserRepository userRepository;
-
     public AdminService(IUserRepository userRepository, IBookRepository bookRepository,
                         IBorrowedBookRepo borrowedBooksRepo){
         super(userRepository, bookRepository, borrowedBooksRepo);
-//        this.bookRepository = bookRepository;
-//        this.userRepository = userRepository;
     }
 
     @Override
