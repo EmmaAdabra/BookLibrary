@@ -107,7 +107,7 @@ public class AdminController extends UserController {
             Set<User> users = borrowRecord.keySet();
 
             users.forEach(user -> {
-                String userDetails = user.getUserName() + " (" + Utils.maskEmail(user.getUserEmail()) +")";
+                String userDetails = user.getUserName() + " (" + StringUtility.maskEmail(user.getUserEmail()) +")";
                 System.out.println(userDetails);
                 var borrowedBooks = borrowRecord.get(user);
                 int borrowedQty = borrowedBooks.size();

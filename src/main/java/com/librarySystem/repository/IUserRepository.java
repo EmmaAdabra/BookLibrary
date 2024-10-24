@@ -7,6 +7,6 @@ import java.util.List;
 public interface IUserRepository {
     List<User> getUsers();
 
-    void add(User user);
+    void addUser(User user);
     User getUserByEmail(String email);
 }

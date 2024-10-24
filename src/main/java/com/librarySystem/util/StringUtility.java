@@ -1,6 +1,6 @@
 package main.java.com.librarySystem.util;
 
-public class Utils {
+public class StringUtility {
     public static IValidateInput validate = new ValidateUserInput();
 
     public static String maskEmail(String email) {

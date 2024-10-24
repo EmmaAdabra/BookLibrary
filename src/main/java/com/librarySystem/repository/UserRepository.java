@@ -14,7 +14,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public void add(User user) {
+    public void addUser(User user) {
         users.add(user);
     }
 
