@@ -62,12 +62,13 @@ public class UserController {
     }
 
     protected void displayMenu(User user) {
+        String userDetails = user.getUserName() + " (" + user.getUserEmail() + ")";
         String heading = "--------------- Main Menu ---------------";
         String[] menuOptions = new String[]{"View All Books", "Search for Book",
                 "Borrow Book", "Return Book", "View Borrowed Books", "Logout"};
 
         while (user.isLoggedIn()) {
-            DisplayHelpers.displayMenu(heading, menuOptions);
+            DisplayHelpers.displayMenu(heading, menuOptions, userDetails);
             int userOption = IterateInput.intInput("Option", 1, menuOptions.length, validateInput::validateOption);
 
             switch (userOption) {

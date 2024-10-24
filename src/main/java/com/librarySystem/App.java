@@ -25,7 +25,7 @@ public class App {
         String[] menuOptions = new String[]{"Sign up", "Login", "Exit"};
 
         while (running) {
-            DisplayHelpers.displayMenu(heading, menuOptions);
+            DisplayHelpers.displayMenu(heading, menuOptions, "");
             int option = IterateInput.intInput("Option", 1, 3, validate::validateOption);
 
             switch (option){

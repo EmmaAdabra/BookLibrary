@@ -32,6 +32,7 @@ public class AdminController extends UserController {
 
     @Override
     protected void displayMenu(User user) {
+        String userDetails = user.getUserName() + " (" + user.getUserEmail() + ")";
         System.out.println();
         String heading = "--------------- Main Menu ---------------";
         String[] menuOptions = new String[]{
@@ -45,7 +46,7 @@ public class AdminController extends UserController {
         };
 
         while (user.isLoggedIn()) {
-            DisplayHelpers.displayMenu(heading, menuOptions);
+            DisplayHelpers.displayMenu(heading, menuOptions, userDetails);
             int userOption = IterateInput.intInput("Option", 1, menuOptions.length, validateInput::validateOption);
 
             switch (userOption) {
