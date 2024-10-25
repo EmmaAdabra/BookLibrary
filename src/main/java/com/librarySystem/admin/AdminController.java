@@ -16,8 +16,8 @@ public class AdminController extends UserController {
     private IAdminService adminService;
 
     public AdminController(IUserRepository userRepository, IBookRepository bookRepository,
-                           IBorrowedBookRepo borrowedBooksRepo, Scanner scanner, IValidateInput validateInput) {
-        super(userRepository, bookRepository, borrowedBooksRepo, scanner, validateInput);
+                           IBorrowedBookRepo borrowedBooksRepo, IValidateInput validateInput) {
+        super(userRepository, bookRepository, borrowedBooksRepo, validateInput);
         this.adminService = new AdminService(userRepository, bookRepository, borrowedBooksRepo);
     }
 
@@ -64,11 +64,11 @@ public class AdminController extends UserController {
     private void addBook() {
         System.out.println();
         System.out.println("--------------- Enter book details ---------------");
-        String title = scanner.readString("Title");
-        String author = scanner.readString("Author");
-        String category = scanner.readString("Category");
-        String ISBN = scanner.readString("ISBN");
-        int quantity = scanner.readInt("Quantity");
+        String title = CustomScanner.readString("Title");
+        String author = CustomScanner.readString("Author");
+        String category = CustomScanner.readString("Category");
+        String ISBN = CustomScanner.readString("ISBN");
+        int quantity = CustomScanner.readInt("Quantity");
         System.out.println();
 
         var newBook = new Book(title, author, category, ISBN, quantity);

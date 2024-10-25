@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 
 public class IterateInput {
-    static Scanner scanner = new Scanner();
+    static CustomScanner scanner = new CustomScanner();
     static public String stringInput(String prompt, Function<String, Response> validate) {
         String value;
         Response response;

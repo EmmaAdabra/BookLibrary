@@ -10,4 +10,6 @@ public interface IValidateInput {
     Response validateEmail(String email);
     Response validatePassword(String password);
     Response validateUserOption(int option, int min, int max);
+    boolean validateEmptyInput(String input);
+    boolean ValidateIntInput(String Input);
 }

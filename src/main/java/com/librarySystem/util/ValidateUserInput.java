@@ -44,4 +44,17 @@ public class ValidateUserInput implements IValidateInput {
         }
         return new Response(true, "success", null);
     }
+
+    @Override
+    public boolean validateEmptyInput(String input) {
+        if(input.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean ValidateIntInput(String Input) {
+        return false;
+    }
 }

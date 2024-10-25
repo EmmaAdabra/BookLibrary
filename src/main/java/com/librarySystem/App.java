@@ -12,9 +12,9 @@ public class App {
         IUserRepository userRepository = new UserRepository();
         IBorrowedBookRepo borrowedBooksRepo = new BorrowedBookRepo();
         IValidateInput validate = new ValidateUserInput();
-        var adminController = new AdminController(userRepository, bookRepository, borrowedBooksRepo, new Scanner(), validate);
+        var adminController = new AdminController(userRepository, bookRepository, borrowedBooksRepo, validate);
         var userController = new UserController(userRepository, bookRepository,
-                borrowedBooksRepo, new Scanner(), validate);
+                borrowedBooksRepo, validate);
         var authController = new AuthController(adminController, userController, userRepository, validate);
 
         Boolean running = true;

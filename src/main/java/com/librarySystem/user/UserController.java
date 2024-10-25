@@ -11,16 +11,14 @@ import java.util.List;
 
 public class UserController {
     protected IUserService userService;
-    protected Scanner scanner;
     protected IValidateInput validateInput;
 
     protected User loggedInUser;
 
     public UserController(IUserRepository userRepository, IBookRepository bookRepository,
                           IBorrowedBookRepo borrowedBooksRepo,
-                          Scanner scanner, IValidateInput validateInput) {
+                          IValidateInput validateInput) {
         this.userService = new UserService(userRepository, bookRepository, borrowedBooksRepo);
-        this.scanner = scanner;
         this.validateInput = validateInput;
     }
 
@@ -30,7 +28,7 @@ public class UserController {
 
 //        get user details
         String name = IterateInput.stringInput("Name", validateInput::validateName);
-        String email = IterateInput.stringInput("Email", validateInput::validateEmail);
+        String email = IterateInput.stringInput("Email", validateInput::validateEmail).toLowerCase();
         String password = IterateInput.stringInput("Password", validateInput::validatePassword);
         System.out.println();
         System.out.println("Choose account type:");
@@ -115,17 +113,17 @@ public class UserController {
 
         switch (userOption) {
             case 1 -> {
-                query = scanner.readString("Book Title");
+                query = CustomScanner.readString("Book Title");
                 response = userService.searchBook("title", query);
             }
 
             case 2 -> {
-                query = scanner.readString("Book ISBN");
+                query = CustomScanner.readString("Book ISBN");
                 response = userService.searchBook("ISBN", query);
             }
 
             case 3 -> {
-                query = scanner.readString("Book Category");
+                query = CustomScanner.readString("Book Category");
                 response = userService.searchBook("category", query);
             }
         }
@@ -154,7 +152,7 @@ public class UserController {
 
     protected void borrowBook(){
         System.out.println();
-        String bookTitle = scanner.readString("Book title");
+        String bookTitle = CustomScanner.readString("Book title");
         System.out.println();
 
         var response = userService.borrowBook(loggedInUser, bookTitle);
@@ -190,8 +188,8 @@ public class UserController {
     protected void returnBook() {
         System.out.println("--------------- Return Borrowed Books ---------------");
         System.out.println();
-        String bookTitle = scanner.readString("Enter Title You Want To Return");
-        int returnQty = scanner.readInt("Return Quantity");
+        String bookTitle = CustomScanner.readString("Enter Title You Want To Return");
+        int returnQty = CustomScanner.readInt("Return Quantity");
         System.out.println();
         var response = userService.returnBook(loggedInUser, bookTitle, returnQty);
 
