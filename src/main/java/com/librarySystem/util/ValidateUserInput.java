@@ -54,7 +54,14 @@ public class ValidateUserInput implements IValidateInput {
     }
 
     @Override
-    public boolean ValidateIntInput(String Input) {
-        return false;
+    public Response validateIntInput(String input) {
+        Integer result;
+
+        try {
+            result = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            return new Response(false, "only accept numbers", null);
+        }
+        return new Response(true, "valid value", result);
     }
 }
