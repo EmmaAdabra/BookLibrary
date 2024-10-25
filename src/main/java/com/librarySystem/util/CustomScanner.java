@@ -1,14 +1,13 @@
 package main.java.com.librarySystem.util;
 
+import java.util.Scanner;
+
 /**
  * This class is used to read users inputs
  */
-public class Scanner {
-    private java.util.Scanner scanner;
-    public Scanner(){
-        this.scanner = new java.util.Scanner(System.in);
-    }
-    public String readString(String prompt){
+public class CustomScanner {
+    private static Scanner scanner = new Scanner(System.in);
+    public static String readString(String prompt){
         String value;
         while(true) {
             System.out.print(prompt +": ");
@@ -23,7 +22,7 @@ public class Scanner {
         return value;
     }
 
-    public int readInt(String prompt){
+    public static int readInt(String prompt){
         int option;
         while (true) {
             try {
