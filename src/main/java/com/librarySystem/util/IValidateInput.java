@@ -11,5 +11,5 @@ public interface IValidateInput {
     Response validatePassword(String password);
     Response validateUserOption(int option, int min, int max);
     boolean validateEmptyInput(String input);
-    boolean ValidateIntInput(String Input);
+    Response validateIntInput(String Input);
 }
