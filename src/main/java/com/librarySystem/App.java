@@ -26,7 +26,7 @@ public class App {
 
         while (running) {
             DisplayHelpers.displayMenu(heading, menuOptions, "");
-            int option = IterateInput.intInput("Option", 1, 3, validate::validateOption);
+            int option = IterateInput.intInput("Option", 1, 3, validate::validateUserOption);
 
             switch (option){
                 case 1 -> userController.signUp();

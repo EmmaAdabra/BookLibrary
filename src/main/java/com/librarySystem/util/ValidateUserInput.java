@@ -38,7 +38,7 @@ public class ValidateUserInput implements IValidateInput {
     }
 
     @Override
-    public Response validateOption(int option, int min, int max) {
+    public Response validateUserOption(int option, int min, int max) {
         if(!(option >= min && option <= max)){
             return new Response(false, "option should be between " + min + " and " + max, null);
         }

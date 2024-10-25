@@ -9,5 +9,5 @@ public interface IValidateInput {
     Response validateName(String name);
     Response validateEmail(String email);
     Response validatePassword(String password);
-    Response validateOption(int option, int min, int max);
+    Response validateUserOption(int option, int min, int max);
 }

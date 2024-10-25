@@ -36,7 +36,7 @@ public class UserController {
         System.out.println("Choose account type:");
         System.out.println("1. Regular user");
         System.out.println("2. Admin");
-        int roleOption = IterateInput.intInput("Choose role", 1, 2, validateInput::validateOption);
+        int roleOption = IterateInput.intInput("Choose role", 1, 2, validateInput::validateUserOption);
         Role role = roleOption == 1 ? Role.USER : Role.ADMIN;
         System.out.println();
 
@@ -69,7 +69,7 @@ public class UserController {
 
         while (user.isLoggedIn()) {
             DisplayHelpers.displayMenu(heading, menuOptions, userDetails);
-            int userOption = IterateInput.intInput("Option", 1, menuOptions.length, validateInput::validateOption);
+            int userOption = IterateInput.intInput("Option", 1, menuOptions.length, validateInput::validateUserOption);
 
             switch (userOption) {
                 case 1 -> viewAllBooks();
@@ -111,7 +111,7 @@ public class UserController {
         DisplayHelpers.displaySubMenu(heading, searchOptions);
 
         int userOption = IterateInput.intInput("Option", 1, searchOptions.length,
-                validateInput::validateOption);
+                validateInput::validateUserOption);
 
         switch (userOption) {
             case 1 -> {

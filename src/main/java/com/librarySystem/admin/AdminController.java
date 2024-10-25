@@ -47,7 +47,7 @@ public class AdminController extends UserController {
 
         while (user.isLoggedIn()) {
             DisplayHelpers.displayMenu(heading, menuOptions, userDetails);
-            int userOption = IterateInput.intInput("Option", 1, menuOptions.length, validateInput::validateOption);
+            int userOption = IterateInput.intInput("Option", 1, menuOptions.length, validateInput::validateUserOption);
 
             switch (userOption) {
                 case 1 -> addBook();
